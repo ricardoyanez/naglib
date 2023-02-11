@@ -1,0 +1,41 @@
+--- rksuite.f.orig	1992-04-27 13:23:58.000000000 -0700
++++ rksuite.f	2022-11-03 05:49:36.630900971 -0700
+@@ -2281,19 +2281,19 @@
+ C  If you pass copies of RKSUITE on to others, please give them the whole
+ C  distribution version of RKSUITE, and in particular, give them a version 
+ C  of ENVIRN that does not have the following six statements Commented out.
+-      WRITE(*,*) ' Before using RKSUITE, you must verify that the  '
+-      WRITE(*,*) ' machine- and installation-dependent quantities  '
+-      WRITE(*,*) ' specified in the subroutine ENVIRN are correct, '
+-      WRITE(*,*) ' and then Comment these WRITE statements and the '
+-      WRITE(*,*) ' STOP statement out of ENVIRN.                   '
+-      STOP
++c$$$      WRITE(*,*) ' Before using RKSUITE, you must verify that the  '
++c$$$      WRITE(*,*) ' machine- and installation-dependent quantities  '
++c$$$      WRITE(*,*) ' specified in the subroutine ENVIRN are correct, '
++c$$$      WRITE(*,*) ' and then Comment these WRITE statements and the '
++c$$$      WRITE(*,*) ' STOP statement out of ENVIRN.                   '
++c$$$      STOP
+ C
+ C  The following values are appropriate to IEEE arithmetic with the typical
+ C  standard output channel.
+ C
+       OUTCH = 6
+-      MCHEPS = 1.11D-16
+-      DWARF = 2.23D-308
++C      MCHEPS = 1.11D-16
++C      DWARF = 2.23D-308
+ C      
+ C------------------------------------------------------------------------------
+ C  If you have the routines D1MACH and I1MACH on your system, you could
+@@ -2309,8 +2309,8 @@
+ C      .. Executable Statements ..
+ C
+ C      OUTCH = I1MACH(2)
+-C      MCHEPS = D1MACH(3)
+-C      DWARF = D1MACH(1)
++      MCHEPS = D1MACH(3)
++      DWARF = D1MACH(1)
+ C
+ C  If you have the NAG Fortran Library available on your system, you could 
+ C  replace the preceding statements by the following ones to obtain the 
