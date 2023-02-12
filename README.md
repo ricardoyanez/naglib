@@ -11,12 +11,15 @@ Clone repository, enter source directory and compile,
    $ cd naglib  
    $ sudo make install  
    ```
+## Dependencies
+
+Your system needs the Standard C library, `gfortran` and GSL installed. 
 
 ## Usage
 
 The shared library `libnag.so` is installed in `/usr/local/lib`. Call a NAG routine with its normal syntax, and compile your code with `-lnag`,
 
-    $ gfortan -o myprog myprof.f -lnag
+    $ gfortan -o myprog myprof.f -lnag -lgsl
 
 ## NAG Routine Replacements
 
