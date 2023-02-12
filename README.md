@@ -19,7 +19,7 @@ Your system needs the Standard C library, `gfortran` and  the [GSL Library](#gsl
 
 The shared library `libnag.so` is installed in `/usr/local/lib`. Call a NAG routine with its normal syntax, and compile your code with `-lnag`,
 
-    $ gfortan -o myprog myprof.f -lnag -lgsl
+    $ gfortan -o myprog myprof.f -lnag -lgsl -lgslcblas -lm
 
 ## NAG Routine Replacements
 
