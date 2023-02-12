@@ -13,7 +13,7 @@ Clone repository, enter source directory and compile,
    ```
 ## Dependencies
 
-Your system needs the Standard C library, `gfortran` and GSL installed. 
+Your system needs the Standard C library, `gfortran` and  the [GSL Library](#gsl-library) installed. 
 
 ## Usage
 
