@@ -41,7 +41,7 @@
 
 double gaussd_gsl( double mean, double sigma ) {
   static bool gsl_rng_init = true;
-  static gsl_rng_type *T;
+  const gsl_rng_type *T;
   static gsl_rng *r;
   /* initialize the GSL random number generator once */
   if ( gsl_rng_init ) {
