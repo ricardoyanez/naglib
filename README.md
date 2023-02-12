@@ -172,9 +172,7 @@ real FUNCTION G05DDF(A,B)
 real A,B
 ```
 
-The **G05DDF** function is replaced with a C wrapper that returns a Gaussian random variate from the GSL Library.
-
-Compile with `-lnag -lgsl`.
+The **G05DDF** function is replaced with a C wrapper that returns a Gaussian random variate from the [GSL Library](#gsl-library).
 
 ### S14AAF
 
