@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Ricardo Yanez <ricardo.yanez@calel.org>
+ * Copyright (c) 2022-2023 Ricardo Yanez <ricardo.yanez@calel.org>
  *
  * C wrappers to the NAG Fortran Library for GRAZING
  *
@@ -22,22 +22,54 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <time.h>
 #include <math.h>
 #include <fenv.h>
 #include <float.h>
 
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
+
 /*
- * X05BAF returns the amount of processor time used since an unspecified 
- * previous time, via the routine name.
+ * Random samling of a Gaussian (Normal) distribution with mean being the mean
+ * and sigma the standard deviation of the distribution.
  *
- * This wapper uses the GNU C Library function clock(). 
- * Dividing clock() by CLOCKS_PER_SEC gives the processor time in seconds.
+ * (GSL version)
  *
  */
 
-double c_x05baf_() {
-  return (double)clock()/CLOCKS_PER_SEC;
+double gaussd_gsl( double mean, double sigma ) {
+  static bool gsl_rng_init = true;
+  static gsl_rng_type *T;
+  static gsl_rng *r;
+  /* initialize the GSL random number generator once */
+  if ( gsl_rng_init ) {
+    srand(time(NULL));
+    long seed = rand();
+    /* convert seed to a string */
+    char cseed[256];
+    sprintf(cseed,"%ld",seed);
+    if ( setenv("GSL_RNG_SEED",cseed,1) ) {
+      fprintf(stderr,"error setting GSL_RNG_SEED\n");
+      exit(EXIT_FAILURE);
+    }
+    gsl_rng_env_setup();
+    T = gsl_rng_default;
+    r = gsl_rng_alloc(T);
+    gsl_rng_init = false;
+  }
+  return gsl_ran_gaussian(r,sigma) + mean;
+}
+
+/*
+ * G05DDF returns a pseudo-random real number taken from a Normal 
+ * (Gaussian) distribution with mean a and standard deviation b.
+ */
+
+double c_g05ddf_( double *a, double *b ) {
+  double x = gaussd_gsl(*a,*b);
+  return gaussd_gsl(*a,*b);
 }
 
 /*
@@ -97,6 +129,19 @@ double c_s15adf_(double *x, int *ifail) {
     *ifail = 1;
   }
   return f;
+}
+
+/*
+ * X05BAF returns the amount of processor time used since an unspecified 
+ * previous time, via the routine name.
+ *
+ * This wapper uses the GNU C Library function clock(). 
+ * Dividing clock() by CLOCKS_PER_SEC gives the processor time in seconds.
+ *
+ */
+
+double c_x05baf_() {
+  return (double)clock()/CLOCKS_PER_SEC;
 }
 
 /*

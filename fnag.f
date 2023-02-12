@@ -275,6 +275,20 @@ C
 C
 C     ------------------------------------------------------------------------
 C
+C     G05DDF returns a pseudo-random real number taken from a Normal
+C     (Gaussian) distribution with mean a and standard deviation b.
+C
+C     The C function c_g05ddf is used to substitute G05DDF by calling
+C     GSL functions.
+C
+      REAL*8 FUNCTION G05DDF(A,B)
+      IMPLICIT REAL*8(A-G,O-Z)
+      G05DDF=c_g05ddf(A,B)
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
 C     S14AAF returns the value of the Gamma function via the routine name.
 C
 C     The C function c_s14aaf is used to substitute S14AAF by calling tgamma().

@@ -160,6 +160,19 @@ REAL X(N),F(N),D(N),PX(M),PF(M),PD(M)
 
 The **E01BGF** routine is replaced by the [PCHIP](#pchip---piecewise-cubic-hermite-interpolation-package) routine **DPCHFD**.
 
+### G05DDF
+
+Returns a pseudo-random real number taken from a Normal (Gaussian) distribution with mean `a` and standard deviation `b`.
+
+```Fortran
+real FUNCTION G05DDF(A,B)
+real A,B
+```
+
+The **G05DDF** function is replaced with a C wrapper that returns a Gaussian random variate from the GSL Library.
+
+Compile with `-lnag -lgsl`.
+
 ### S14AAF
 
 S14AAF returns the value of the Gamma function Γ(x), via the routine name.
@@ -284,6 +297,10 @@ R. Piessens, E. De Doncker-Kapenga and C. W. Überhuber. QUADPACK: a subroutine 
 ## RKSUITE - a suite of Runde-Kutta codes
 
 [RKSUITE](https://netlib.sandia.gov/ode/rksuite/) is a suite of Runde-Kutta codes that is available free of charge to the scientific community. It has no discernable license.
+
+## GSL Library
+
+The [GNU Scientific Library](https://www.gnu.org/software/gsl/) (GSL) is a numerical C and C++ library licensed under the GNU General Public License. The library includes a broad range of numerical subject areas.
 
 ## Bug Reporting
 
