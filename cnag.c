@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2022-2023 Ricardo Yanez <ricardo.yanez@calel.org>
  *
- * C wrappers to the NAG Fortran Library for GRAZING
+ * C wrappers to the NAG Fortran Library
  *
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -26,13 +26,12 @@
 #include <time.h>
 #include <math.h>
 #include <fenv.h>
+#include <errno.h>
 #include <float.h>
 
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_cdf.h>
 #include <gsl/gsl_randist.h>
-
-#define MAX(a,b) (((a)>(b))?(a):(b))
 
 static bool gsl_rng_init = true;
 const gsl_rng_type *T;
@@ -84,6 +83,7 @@ void c_g05ecf_( double *mu, double *rv, int *nr ) {
 
 void c_g05eyf_( double *rv, int *nr, int *k ) {
   /* initialize the GSL random number generator once */
+  printf("nr=%d\n",*nr);
   if ( gsl_rng_init ) {
     srand(time(NULL));
     long seed = rand();
@@ -100,12 +100,16 @@ void c_g05eyf_( double *rv, int *nr, int *k ) {
     gsl_rng_init = false;
   }
   double s = gsl_rng_uniform (r);
+  /* printf("OK\n"); */
+  printf("s=%f\n",s);
   int i = 0;
   while ( 1 )  {
     if ( rv[i] > s ) break;
     i++;
   }
+  printf("%d\n",i);
   *k = i;
+  printf("%d\n",*k);
   return;
 }
 
@@ -116,14 +120,21 @@ void c_g05eyf_( double *rv, int *nr, int *k ) {
  *
  */
 
-double c_s14aaf_( double *x, int ifail ) {
+double c_s14aaf_( double *x, int *ifail ) {
   feclearexcept(FE_ALL_EXCEPT);
-  double f = tgamma(*x);
-  ifail = 0;
+  double y = tgamma(*x);
+  /* check for function math errors */
+  *ifail = 0;
   if ( fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW) ) {
-    ifail = 1;
+    *ifail = 1;
+    if ( errno == EDOM ) {
+      fprintf(stderr,"c_s14aaf: negative domain error calling tgamma()\n");
+    }
+    else if ( errno == ERANGE ) {
+      fprintf(stderr,"c_s14aaf: domain error calling tgamma()\n");
+    }
   }
-  return f;
+  return y;
 }
 
 /*
@@ -134,10 +145,11 @@ double c_s14aaf_( double *x, int ifail ) {
  *
  */
 
-double c_s14abf_(double *x, int ifail) {
+double c_s14abf_( double *x, int ifail ) {
   feclearexcept(FE_ALL_EXCEPT);
   double f = lgamma(*x);
   ifail = 0;
+  /* check for function math errors */
   if ( fetestexcept(FE_DIVBYZERO|FE_OVERFLOW) ) {
     ifail = 1;
   }
@@ -152,10 +164,11 @@ double c_s14abf_(double *x, int ifail) {
  *
  */
 
-double c_s15adf_(double *x, int ifail) {
+double c_s15adf_( double *x, int ifail ) {
   feclearexcept(FE_ALL_EXCEPT);
   double f = erfc(*x);
   ifail = 0;
+  /* check for function math errors */
   if ( fetestexcept(FE_UNDERFLOW) ) {
     ifail = 1;
   }

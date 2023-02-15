@@ -262,23 +262,22 @@ C
 C     ------------------------------------------------------------------------
 C
 C     G05ECF sets up the reference vector R for a Poisson distribution with
-C     mean t for use in G05EYF.
+C     mean t for use in G05EYF. (See g05ecf.pdf)
+C
+C     The C function c_g05ecf is used to substitute G05ECF by calling
+C     GSL functions.
 C
       SUBROUTINE G05ECF(T,R,NR,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION R(NR)
-      IFAIL=0
 C     On entry, T < 0
       IF ( T < 0.0 ) THEN
-        WRITE(*,*)'G05ECF: T < 0'
         IFAIL=1
         RETURN
       END IF
 C     On entry, NR is too small
       NRMIN=INT(T+7.5*DSQRT(T)+8.5)-MAX(0,INT(T-7.15*DSQRT(T)))+4
       IF ( NR .LE. NRMIN ) THEN
-        WRITE(*,'(A)')'G05ECF: NR is too small'
-        WRITE(*,'(A,I3)')'Suggested NR value is 20 + 20*SQRT(T)'
         IFAIL=2
         RETURN
       END IF
@@ -291,6 +290,9 @@ C
 C     G05EYF returns a pseudo-random integer taken from a discrete distribution
 C     defined by a reference vector R.
 C     mean t for use in G05EYF.
+C
+C     The C function c_g05eyf is used to substitute G05EYF by calling
+C     GSL functions.
 C
       INTEGER FUNCTION G05EYF(R,NR)
       IMPLICIT REAL*8(A-G,O-Z)
@@ -309,7 +311,7 @@ C     The C function c_s14aaf is used to substitute S14AAF by calling tgamma().
 C
       FUNCTION S14AAF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
-      S14AAF = c_s14aaf(X,IFAIL)
+      S14AAF=c_s14aaf(X,IFAIL)
       RETURN
       END
 C
