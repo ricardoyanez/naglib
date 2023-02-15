@@ -65,7 +65,7 @@ REAL X,FX,H,BOUNDL,BOUNDU,Y,C(11)
 
 ### D01AMF
 
-Calculates an approximation to the integral of a function f(x) over an infinite or semi-infinite interval.
+Calculates an approximation to the integral of a function _f(x)_ over an infinite or semi-infinite interval.
 
 ```Fortran
 SUBROUTINE D01AMF(F,BOUND,INF,EPSABS,EPSREL,RESULT,ABSERR,W,LW,IW,LIW,IFAIL)
@@ -78,7 +78,7 @@ The **D01AMF** routine is replaced by [QUADPACK](#quadpack---numerical-integrati
 
 ### D01ASF
 
-Calculates an approximation to the sine or the cosine transform of a function g over [a, ∞) for a user-specified value of ω.
+Calculates an approximation to the sine or the cosine transform of a function _g_ over [a, ∞) for a user-specified value of _ω_.
 
 ```Fortran
  SUBROUTINE D01ASF(G,A,OMEGA,KEY,EPSABS,RESULT,ABSERR,
@@ -165,7 +165,7 @@ The **E01BGF** routine is replaced by the [PCHIP](#pchip---piecewise-cubic-hermi
 
 ### G05DDF
 
-Returns a pseudo-random real number taken from a Normal (Gaussian) distribution with mean `a` and standard deviation `b`.
+Returns a pseudo-random real number taken from a Normal (Gaussian) distribution with mean _a_ and standard deviation _b_.
 
 ```Fortran
 real FUNCTION G05DDF(A,B)
@@ -174,9 +174,34 @@ real A,B
 
 The **G05DDF** function is replaced with a C wrapper that returns a Gaussian random variate from the [GSL Library](#gsl-library).
 
+### G05ECF
+
+Sets up the reference vector _R_ for a Poisson distribution with mean _t_.
+
+```Fortran
+SUBROUTINE G05ECF(T,R,NR,IFAIL)
+INTEGER NR,IFAIL
+real T,R(NR)
+```
+
+The **G05ECF** routine is replaced with a C wrapper that calls functions to generate a Poisson Distribution CDF from the [GSL Library](#gsl-library).
+
+### G05EYF
+
+Returns a pseudo-random integer taken from a discrete distribution defined by a reference vector _R_.
+
+```Fortran
+INTEGER FUNCTION G05EYF(R, NR)
+INTEGER NR
+real R(NR)
+```
+
+The **G05EYF** function is replaced with a C wrapper that generates a random number _x_ from the [GSL Library](#gsl-library) and searches the CDF in the reference vector _R_ for the smallest value _y_ such that _R(y)_ &lt; x &le; _R(y+1)_ .
+
+
 ### S14AAF
 
-S14AAF returns the value of the Gamma function Γ(x), via the routine name.
+S14AAF returns the value of the Gamma function _Γ(x)_, via the routine name.
 
 ```Fortran
 REAL FUNCTION S14AAF(X,IFAIL)
@@ -188,7 +213,7 @@ The **S14AAF** routine is substituted with a C wrapper function that calls **tga
 
 ### S14ABF
 
-Returns a value for the logarithm of the Gamma function, ln Γ(x), via the routine name.
+Returns a value for the logarithm of the Gamma function, ln _Γ(x)_, via the routine name.
 
 ```Fortran
 REAL FUNCTION S14ABF(X,IFAIL)
@@ -200,7 +225,7 @@ The **S14ABF** routine is substituted with a C wrapper function that calls **lga
 
 ### S15ADF
 
-Returns the value of the complementary error function, erfc x, via the routine name.
+Returns the value of the complementary error function, _erfc x_, via the routine name.
 
 ```Fortran
 REAL FUNCTION S15ADF(X,IFAIL)
@@ -212,7 +237,7 @@ The **S15ADF** routine is substituted with a C wrapper function that calls **erf
 
 ### S18AEF
 
-Returns the value of the modified Bessel Function I0(x), via the routine name.
+Returns the value of the modified Bessel Function _I0(x)_, via the routine name.
 
 ```Fortran
 REAL FUNCTION S18AEF(X, IFAIL)
@@ -224,7 +249,7 @@ The **S18AEF** routine is replaced by the [Numerical Recipes](#numerical-recipes
 
 ### S18AFF
 
-Returns the value of the modified Bessel Function I1(x), via the routine name.
+Returns the value of the modified Bessel Function _I1(x)_, via the routine name.
 
 ```Fortran
 REAL FUNCTION S18AFF(X, IFAIL)
@@ -236,8 +261,8 @@ The **S18AFF** routine is replaced by the [Numerical Recipes](#numerical-recipes
 
 ### S18DEF
 
-Returns a sequence of values for the modified Bessel functions I<sub>ν+n</sub>(z) for complex z, non-negative
-ν and n = 0, 1, . . . , N − 1, with an option for exponential scaling.
+Returns a sequence of values for the modified Bessel functions _I<sub>ν+n</sub>(z)_ for complex _z_, non-negative
+_ν_ and _n_ = 0, 1, . . . , _N_ − 1, with an option for exponential scaling.
 
 ```Fortran
 SUBROUTINE S18DEF(FNU,Z,N,SCALE,CY,NZ,IFAIL)

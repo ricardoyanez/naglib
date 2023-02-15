@@ -29,20 +29,47 @@
 #include <float.h>
 
 #include <gsl/gsl_rng.h>
+#include <gsl/gsl_cdf.h>
 #include <gsl/gsl_randist.h>
+
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
+static bool gsl_rng_init = true;
+const gsl_rng_type *T;
+static gsl_rng *r;
+
+/*
+ * Random samling of a Poisson distribution with mean mu.
+ * (Uses GSL)
+ */
+
+double poisson_gsl( double mu ) {
+  /* initialize the GSL random number generator once */
+  if ( gsl_rng_init ) {
+    srand(time(NULL));
+    long seed = rand();
+    /* convert seed to a string */
+    char cseed[256];
+    sprintf(cseed,"%ld",seed);
+    if ( setenv("GSL_RNG_SEED",cseed,1) ) {
+      fprintf(stderr,"error setting GSL_RNG_SEED\n");
+      exit(EXIT_FAILURE);
+    }
+    gsl_rng_env_setup();
+    T = gsl_rng_default;
+    r = gsl_rng_alloc(T);
+    gsl_rng_init = false;
+  }
+  return gsl_ran_poisson(r,mu);
+}
 
 /*
  * Random samling of a Gaussian (Normal) distribution with mean being the mean
  * and sigma the standard deviation of the distribution.
- *
- * (GSL version)
- *
+ * (Uses GSL)
  */
 
 double gaussd_gsl( double mean, double sigma ) {
-  static bool gsl_rng_init = true;
-  const gsl_rng_type *T;
-  static gsl_rng *r;
   /* initialize the GSL random number generator once */
   if ( gsl_rng_init ) {
     srand(time(NULL));
@@ -68,8 +95,66 @@ double gaussd_gsl( double mean, double sigma ) {
  */
 
 double c_g05ddf_( double *a, double *b ) {
-  double x = gaussd_gsl(*a,*b);
   return gaussd_gsl(*a,*b);
+}
+
+/*
+ * G05CEF sets up the reference vector p[nr] for a Poisson distribution with mean mu.
+ * (Uses GSL)
+ */
+
+void c_g05ecf_( double *mu, double *p, int *nr, int *ifail ) {
+  /* on entry, mu < 0 */
+  if ( *mu < 0.0 ) {
+    fprintf(stderr,"Warning in c_g05ecf, mu < 0\n");
+    *ifail = 1;
+    return;
+  }
+  /* on entry, nr is too small */
+  if ( *nr <= (int)(*mu+7.5*sqrt(*mu)+8.5)-MAX(0,(int)(*mu-7.15*sqrt(*mu)))+4 ) {
+    fprintf(stderr,"Warning in c_g05ecf, nr is too small\n");
+    *ifail = 2;
+    return;
+  }
+  for ( int i = 0; i < *nr ; i++ ) {
+    p[i] = gsl_cdf_poisson_P(i,*mu);
+  }
+  *ifail = 0;
+  return;
+}
+
+/*
+ * G05EYF returns a pseudo-random integer taken from a discrete distribution 
+ * defined by a reference vector R.
+ * (Uses GSL)
+ */
+
+void c_g05eyf_( double *rv, int *nr, int *k ) {
+  /* initialize the GSL random number generator once */
+  if ( gsl_rng_init ) {
+    srand(time(NULL));
+    long seed = rand();
+    /* convert seed to a string */
+    char cseed[256];
+    sprintf(cseed,"%ld",seed);
+    if ( setenv("GSL_RNG_SEED",cseed,1) ) {
+      fprintf(stderr,"error setting GSL_RNG_SEED\n");
+      exit(EXIT_FAILURE);
+    }
+    gsl_rng_env_setup();
+    T = gsl_rng_default;
+    r = gsl_rng_alloc(T);
+    gsl_rng_init = false;
+  }
+  double x;
+  double s = gsl_rng_uniform (r);
+  int i = 0;
+  while ( 1 )  {
+    if ( rv[i] > s ) break;
+    i++;
+  }
+  *k = i;
+  return;
 }
 
 /*

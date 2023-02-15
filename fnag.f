@@ -44,8 +44,7 @@ C     for evaluating the function
 C
       SUBROUTINE C05AVF(X,FX,H,BOUNDL,BOUNDU,Y,C,IND,IFAIL)
       WRITE(*,*) '*** Call to C05AVF'
-      WRITE(*,*) 'Warning: This function has not been tested.'
-      WRITE(*,*) 'Please report fort.10 to ricardo.yanez@calel.org.'
+      WRITE(*,*) 'Warning: This function has not been implemented.'
       STOP
       RETURN
       END
@@ -289,17 +288,42 @@ C
 C
 C     ------------------------------------------------------------------------
 C
+C     G05ECF sets up the reference vector R for a Poisson distribution with
+C     mean t for use in G05EYF.
+C
+      SUBROUTINE G05ECF(T,R,NR,IFAIL)
+      IMPLICIT REAL*8(A-G,O-Z)
+      DIMENSION R(NR)
+      CALL c_g05ecf(T,R,NR,IFAIL)
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
+C     G05EYF returns a pseudo-random integer taken from a discrete distribution
+C     defined by a reference vector R.
+C     mean t for use in G05EYF.
+C
+      INTEGER FUNCTION G05EYF(R,NR)
+      IMPLICIT REAL*8(A-G,O-Z)
+      DIMENSION R(NR)
+      INTEGER K
+      CALL c_g05eyf(R,NR,K)
+      G05EYF=K
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
 C     S14AAF returns the value of the Gamma function via the routine name.
 C
 C     The C function c_s14aaf is used to substitute S14AAF by calling tgamma().
 C
       REAL*8 FUNCTION S14AAF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
+      write(*,*)x
       S14AAF = c_s14aaf(X,IFAIL)
-      WRITE(*,*) '*** Call to S14ABF',X,S14AAF,IFAIL
-      WRITE(*,*) 'Warning: This function has not been tested.'
-      WRITE(*,*) 'Please report fort.10 to ricardo.yanez@calel.org.'
-      STOP
+      write(*,*)S14AAF
       RETURN
       END
 C
