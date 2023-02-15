@@ -289,7 +289,6 @@ C     ------------------------------------------------------------------------
 C
 C     G05EYF returns a pseudo-random integer taken from a discrete distribution
 C     defined by a reference vector R.
-C     mean t for use in G05EYF.
 C
 C     The C function c_g05eyf is used to substitute G05EYF by calling
 C     GSL functions.
@@ -297,9 +296,8 @@ C
       INTEGER FUNCTION G05EYF(R,NR)
       IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION R(NR)
-      INTEGER K
-      CALL c_g05eyf(R,NR,K)
-      G05EYF=K
+      INTEGER c_g05eyf
+      G05EYF=c_g05eyf(R,NR)
       RETURN
       END
 C

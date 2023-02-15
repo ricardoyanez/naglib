@@ -81,9 +81,8 @@ void c_g05ecf_( double *mu, double *rv, int *nr ) {
  * (Uses GSL)
  */
 
-void c_g05eyf_( double *rv, int *nr, int *k ) {
+int c_g05eyf_( double *rv, int *nr) {
   /* initialize the GSL random number generator once */
-  printf("nr=%d\n",*nr);
   if ( gsl_rng_init ) {
     srand(time(NULL));
     long seed = rand();
@@ -100,17 +99,12 @@ void c_g05eyf_( double *rv, int *nr, int *k ) {
     gsl_rng_init = false;
   }
   double s = gsl_rng_uniform (r);
-  /* printf("OK\n"); */
-  printf("s=%f\n",s);
   int i = 0;
   while ( 1 )  {
     if ( rv[i] > s ) break;
     i++;
   }
-  printf("%d\n",i);
-  *k = i;
-  printf("%d\n",*k);
-  return;
+  return i;
 }
 
 /*
