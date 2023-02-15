@@ -30,9 +30,6 @@ C
       IMPLICIT REAL*8(A-H,O-Z)
       EXTERNAL F
       X=ZBRENT(F,A,B,ETA,IFAIL)
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to C05ADF',F(A),F(B),X,IFAIL
-      ENDIF
       RETURN
       END
 C
@@ -63,9 +60,6 @@ C
       INTEGER NAVAL,LAST
       CALL DQAGI(F,BOUND,INF,EPSABS,EPSREL,RESULT,ABSERR,NAVAL,
      &     IFAIL,LIW,LW,LAST,IW,W)
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to D01AMF',RESULT,IFAIL
-      ENDIF
       RETURN
       END
 C
@@ -90,9 +84,6 @@ C
       CALL DQAWFE(G,A,OMEGA,KEY,EPSABS,LIMLST,LIMIT,MAXP1,
      &     RESULT,ABSERR,NEVAL,IFAIL,RSLST,ERLST,IERLST,LST,ALIST,BLIST,
      &     RLIST,ELIST,IORD,NNLOG,CHEBMO)
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to D01ASF',RESULT,IFAIL
-      ENDIF
       RETURN
       END
 C
@@ -108,9 +99,6 @@ C
       IMPLICIT REAL*8(A-H,O-Z)
       DIMENSION X(N),Y(N)
       CALL FOURPT(X,Y,N,ANS,ER,IFAIL)
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to D01GAF',ANS,ER,IFAIL
-      ENDIF
       RETURN
       END
 C
@@ -137,9 +125,6 @@ C
       IFAIL=1
       IF (UFLAG.EQ.1) THEN
         IFAIL=0
-      ENDIF
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to D02BAF',IFAIL
       ENDIF
       RETURN
       END
@@ -168,9 +153,6 @@ C
       IF (UFLAG.EQ.1) THEN
         IFAIL=0
       ENDIF
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to D02BBF',OUTPUT,IFAIL
-      ENDIF
       RETURN
       END
 C
@@ -196,9 +178,6 @@ C
         IFAIL=2
       ELSE
         IFAIL=0
-      ENDIF
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to E01BEF',F(1),D(1),IFAIL
       ENDIF
       RETURN
       END
@@ -229,9 +208,6 @@ C
         IFAIL=3
       ELSE
         IFAIL=0
-      ENDIF
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*)'*** Call to E01BFF',PX(1),PF(1),IFAIL
       ENDIF
       RETURN
       END
@@ -266,9 +242,6 @@ C
       ELSE
         IFAIL=0
       ENDIF
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to E01BGF',PX(1),PF(1),PD(1),IFAIL
-      ENDIF
       RETURN
       END
 C
@@ -294,7 +267,22 @@ C
       SUBROUTINE G05ECF(T,R,NR,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION R(NR)
-      CALL c_g05ecf(T,R,NR,IFAIL)
+      IFAIL=0
+C     On entry, T < 0
+      IF ( T < 0.0 ) THEN
+        WRITE(*,*)'G05ECF: T < 0'
+        IFAIL=1
+        RETURN
+      END IF
+C     On entry, NR is too small
+      NRMIN=INT(T+7.5*DSQRT(T)+8.5)-MAX(0,INT(T-7.15*DSQRT(T)))+4
+      IF ( NR .LE. NRMIN ) THEN
+        WRITE(*,'(A)')'G05ECF: NR is too small'
+        WRITE(*,'(A,I3)')'Suggested NR value is 20 + 20*SQRT(T)'
+        IFAIL=2
+        RETURN
+      END IF
+      CALL c_g05ecf(T,R,NR)
       RETURN
       END
 C
@@ -332,7 +320,7 @@ C     ln gamma(x), via the routine name.
 C
 C     The C function c_s14abf is used to substitute S14ABF by calling lgamma().
 C
-      REAL*8 FUNCTION S14ABF(X,IFAIL)
+      FUNCTION S14ABF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
       S14ABF = c_s14abf(X,IFAIL)
       RETURN
@@ -345,7 +333,7 @@ C     via the routine name.
 C
 C     The C function c_s15adf is used to substitute S15ADF by calling erfc().
 C
-      REAL*8 FUNCTION S15ADF(X,IFAIL)
+      FUNCTION S15ADF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
       S15ADF = c_s15adf(X,IFAIL)
       RETURN
@@ -358,7 +346,7 @@ C     routine name.
 C
 C     The Numerical Recipes BESSI0 function is used to substitute S18AEF.
 C
-      REAL*8 function S18AEF(X,IFAIL)
+      FUNCTION S18AEF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
       S18AEF=BESSI0(X)
       IFAIL=0
@@ -376,7 +364,7 @@ C     routine name.
 C
 C     The Numerical Recipes BESSI1 function is used to substitute S18AFF.
 C
-      REAL*8 FUNCTION S18AFF(X,IFAIL)
+      FUNCTION S18AFF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
       S18AFF=BESSI1(X)
       IFAIL=0
@@ -410,9 +398,6 @@ C
       DO I=1,N
         CY(I)=DCMPLX(CYR(I),CYI(I))
       ENDDO
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to S18DEF',CYR(1),CYI(1),CY(1),IFAIL
-      ENDIF
       RETURN
       END
 C

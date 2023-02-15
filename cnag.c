@@ -64,33 +64,21 @@ double c_g05ddf_( double *a, double *b ) {
 }
 
 /*
- * G05CEF sets up the reference vector p[nr] for a Poisson distribution with mean mu.
+ * G05CEF sets up the reference vector rv of dimension nr for a Poisson distribution
+ * with mean mu.
  * (Uses GSL)
  */
 
-void c_g05ecf_( double *mu, double *p, int *nr, int *ifail ) {
-  /* on entry, mu < 0 */
-  if ( *mu < 0.0 ) {
-    fprintf(stderr,"Warning in c_g05ecf, mu < 0\n");
-    *ifail = 1;
-    return;
+void c_g05ecf_( double *mu, double *rv, int *nr ) {
+  for ( int i = 0 ; i < *nr ; i++ ) {
+    rv[i] = gsl_cdf_poisson_P(i,*mu);
   }
-  /* on entry, nr is too small */
-  if ( *nr <= (int)(*mu+7.5*sqrt(*mu)+8.5)-MAX(0,(int)(*mu-7.15*sqrt(*mu)))+4 ) {
-    fprintf(stderr,"Warning in c_g05ecf, nr is too small\n");
-    *ifail = 2;
-    return;
-  }
-  for ( int i = 0; i < *nr ; i++ ) {
-    p[i] = gsl_cdf_poisson_P(i,*mu);
-  }
-  *ifail = 0;
   return;
 }
 
 /*
  * G05EYF returns a pseudo-random integer taken from a discrete distribution 
- * defined by a reference vector R.
+ * defined by a reference vector.
  * (Uses GSL)
  */
 
@@ -111,7 +99,6 @@ void c_g05eyf_( double *rv, int *nr, int *k ) {
     r = gsl_rng_alloc(T);
     gsl_rng_init = false;
   }
-  double x;
   double s = gsl_rng_uniform (r);
   int i = 0;
   while ( 1 )  {

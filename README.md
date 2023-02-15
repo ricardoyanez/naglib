@@ -13,13 +13,19 @@ Clone repository, enter source directory and compile,
    ```
 ## Dependencies
 
-Your system needs the Standard C library, `gfortran` and  the [GSL Library](#gsl-library) installed. 
+Your system needs the GNU Fortran compiler, and the Standard C library and the [GSL Library](#gsl-library) development files.
+
+    $ sudo apt-get install gfortran libc6-dev libgsl-dev
 
 ## Usage
 
 The shared library `libnag.so` is installed in `/usr/local/lib`. Call a NAG routine with its normal syntax, and compile your code with `-lnag`,
 
     $ gfortan -o myprog myprof.f -lnag -lgsl -lgslcblas -lm
+    
+or
+
+    $ gfortan -o myprog myprof.f -lnag `pkg-config --libs gsl`
 
 ## NAG Routine Replacements
 
