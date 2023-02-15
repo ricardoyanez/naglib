@@ -39,63 +39,28 @@ const gsl_rng_type *T;
 static gsl_rng *r;
 
 /*
- * Random samling of a Poisson distribution with mean mu.
- * (Uses GSL)
- */
-
-double poisson_gsl( double mu ) {
-  /* initialize the GSL random number generator once */
-  if ( gsl_rng_init ) {
-    srand(time(NULL));
-    long seed = rand();
-    /* convert seed to a string */
-    char cseed[256];
-    sprintf(cseed,"%ld",seed);
-    if ( setenv("GSL_RNG_SEED",cseed,1) ) {
-      fprintf(stderr,"error setting GSL_RNG_SEED\n");
-      exit(EXIT_FAILURE);
-    }
-    gsl_rng_env_setup();
-    T = gsl_rng_default;
-    r = gsl_rng_alloc(T);
-    gsl_rng_init = false;
-  }
-  return gsl_ran_poisson(r,mu);
-}
-
-/*
- * Random samling of a Gaussian (Normal) distribution with mean being the mean
- * and sigma the standard deviation of the distribution.
- * (Uses GSL)
- */
-
-double gaussd_gsl( double mean, double sigma ) {
-  /* initialize the GSL random number generator once */
-  if ( gsl_rng_init ) {
-    srand(time(NULL));
-    long seed = rand();
-    /* convert seed to a string */
-    char cseed[256];
-    sprintf(cseed,"%ld",seed);
-    if ( setenv("GSL_RNG_SEED",cseed,1) ) {
-      fprintf(stderr,"error setting GSL_RNG_SEED\n");
-      exit(EXIT_FAILURE);
-    }
-    gsl_rng_env_setup();
-    T = gsl_rng_default;
-    r = gsl_rng_alloc(T);
-    gsl_rng_init = false;
-  }
-  return gsl_ran_gaussian(r,sigma) + mean;
-}
-
-/*
  * G05DDF returns a pseudo-random real number taken from a Normal 
  * (Gaussian) distribution with mean a and standard deviation b.
  */
 
 double c_g05ddf_( double *a, double *b ) {
-  return gaussd_gsl(*a,*b);
+  /* initialize the GSL random number generator once */
+  if ( gsl_rng_init ) {
+    srand(time(NULL));
+    long seed = rand();
+    /* convert seed to a string */
+    char cseed[256];
+    sprintf(cseed,"%ld",seed);
+    if ( setenv("GSL_RNG_SEED",cseed,1) ) {
+      fprintf(stderr,"error setting GSL_RNG_SEED\n");
+      exit(EXIT_FAILURE);
+    }
+    gsl_rng_env_setup();
+    T = gsl_rng_default;
+    r = gsl_rng_alloc(T);
+    gsl_rng_init = false;
+  }
+  return gsl_ran_gaussian(r,*b) + *a;
 }
 
 /*
