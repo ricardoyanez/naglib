@@ -1,5 +1,5 @@
 C
-C     Copyright (c) 2022 Ricardo Yanez <ricardo.yanez@calel.org>
+C     Copyright (c) 2022-2023 Ricardo Yanez <ricardo.yanez@calel.org>
 C
 C     Wrappers to the NAG Fortran Library
 C
@@ -27,7 +27,7 @@ C
 C     The Numerical Recipes ZBRENT function is used to substitute C05ADF.
 C
       SUBROUTINE C05ADF(A,B,EPS,ETA,F,X,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL F
       X=ZBRENT(F,A,B,ETA,IFAIL)
       RETURN
@@ -55,7 +55,7 @@ C     The QUADPACK routine DQAGI is used to substitute D01AMF.
 C
       SUBROUTINE D01AMF(F,BOUND,INF,EPSABS,EPSREL,RESULT,ABSERR,
      &     W,LW,IW,LIW,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL F
       INTEGER NAVAL,LAST
       CALL DQAGI(F,BOUND,INF,EPSABS,EPSREL,RESULT,ABSERR,NAVAL,
@@ -72,7 +72,7 @@ C     The QUADPACK routine QAWFE is used to substitute D01ASF.
 C
       SUBROUTINE D01ASF(G,A,OMEGA,KEY,EPSABS,RESULT,ABSERR,
      &     LIMLST,LST,ERLST,RSLST,IERLST,W,LW,IW,LIW,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL G
       INTEGER LIMIT,MAXP1
       PARAMETER (LIMIT=500,MAXP1=50)
@@ -96,7 +96,7 @@ C     A Fortran port of procedure 4pt written in Angol by Gill and Miller
 C     is used to substitute D01GAF.
 C
       SUBROUTINE D01GAF(X,Y,N,ANS,ER,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION X(N),Y(N)
       CALL FOURPT(X,Y,N,ANS,ER,IFAIL)
       RETURN
@@ -110,7 +110,7 @@ C
 C     RKSUITE is used to substitute D02BAF.
 C
       SUBROUTINE D02BAF(X,XEND,N,Y,TOL,FCN,W,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL FCN
       DIMENSION Y(N),YPGOT(N),YMAX(N)
       DIMENSION THRES(N)
@@ -137,7 +137,7 @@ C
 C     RKSUITE is used to substitute D02BBF.
 C
       SUBROUTINE D02BBF(X,XEND,N,Y,TOL,IRELAB,FCN,OUTPUT,W,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL FCN
       DIMENSION Y(N),YPGOT(N),YMAX(N)
       DIMENSION THRES(N)
@@ -164,7 +164,7 @@ C
 C     The DPCHIM routine is used to substitute E01BEF.
 C
       SUBROUTINE E01BEF(N,X,F,D,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION X(N),F(N),D(N)
       INTEGER IFAIL,INCFG,IERR
       INCFD=1
@@ -190,7 +190,7 @@ C
 C     The DPCHFE routine is used to substitute E01BFF.
 C
       SUBROUTINE E01BFF(N,X,F,D,M,PX,PF,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION X(N),F(N),D(N),PX(M),PF(M)
       INTEGER IFAIL,INCFG,IERR
       LOGICAL SKIP
@@ -220,7 +220,7 @@ C
 C     The DPCHFD routine is used to substitute E01BGF.
 C
       SUBROUTINE E01BGF(N,X,F,D,M,PX,PF,PD,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION X(N),F(N),D(N),PX(M),PF(M),PD(M)
       INTEGER IFAIL,INCFD,IERR
       LOGICAL SKIP
@@ -308,7 +308,7 @@ C
 C     The C function c_s14aaf is used to substitute S14AAF by calling tgamma().
 C
       FUNCTION S14AAF(X,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       S14AAF=c_s14aaf(X,IFAIL)
       RETURN
       END
@@ -321,7 +321,7 @@ C
 C     The C function c_s14abf is used to substitute S14ABF by calling lgamma().
 C
       FUNCTION S14ABF(X,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       S14ABF = c_s14abf(X,IFAIL)
       RETURN
       END
@@ -334,7 +334,7 @@ C
 C     The C function c_s15adf is used to substitute S15ADF by calling erfc().
 C
       FUNCTION S15ADF(X,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       S15ADF = c_s15adf(X,IFAIL)
       RETURN
       END
@@ -347,7 +347,7 @@ C
 C     The Numerical Recipes BESSI0 function is used to substitute S18AEF.
 C
       FUNCTION S18AEF(X,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       S18AEF=BESSI0(X)
       IFAIL=0
       WRITE(*,*) '*** Call to S18AEF',S18AEF,IFAIL
@@ -365,7 +365,7 @@ C
 C     The Numerical Recipes BESSI1 function is used to substitute S18AFF.
 C
       FUNCTION S18AFF(X,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       S18AFF=BESSI1(X)
       IFAIL=0
       WRITE(*,*) '*** Call to S18AFF',S18AFF,IFAIL
@@ -384,7 +384,7 @@ C
 C     The Amos Bessel routine ZBESI is used to substitute S18DEF
 C
       SUBROUTINE S18DEF(FNU,Z,N,SCALE,CY,NZ,IFAIL)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       COMPLEX*16 Z,CY(N)
       CHARACTER*1 SCALE
       DIMENSION CYR(N),CYI(N)
@@ -409,7 +409,7 @@ C
 C     The C function c_x05baf is used to substitute X05BAF by calling clock().
 C
       REAL*8 FUNCTION X05BAF()
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       X05BAF=c_x05baf()
       RETURN
       END
@@ -419,7 +419,7 @@ C
 C     Returns double-precision machine constants
 C
       REAL*8 FUNCTION D1MACH(I)
-      IMPLICIT REAL*8(A-H,O-Z)
+      IMPLICIT REAL*8(A-G,O-Z)
       INTEGER I
       D1MACH=c_d1mach(I)
       RETURN
