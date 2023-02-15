@@ -319,11 +319,9 @@ C     S14AAF returns the value of the Gamma function via the routine name.
 C
 C     The C function c_s14aaf is used to substitute S14AAF by calling tgamma().
 C
-      REAL*8 FUNCTION S14AAF(X,IFAIL)
+      FUNCTION S14AAF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
-      write(*,*)x
       S14AAF = c_s14aaf(X,IFAIL)
-      write(*,*)S14AAF
       RETURN
       END
 C
@@ -337,9 +335,6 @@ C
       REAL*8 FUNCTION S14ABF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
       S14ABF = c_s14abf(X,IFAIL)
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to S14ABF',X,S14ABF,IFAIL
-      ENDIF
       RETURN
       END
 C
@@ -353,9 +348,6 @@ C
       REAL*8 FUNCTION S15ADF(X,IFAIL)
       IMPLICIT REAL*8(A-H,O-Z)
       S15ADF = c_s15adf(X,IFAIL)
-      IF (IFAIL.NE.0) THEN
-        WRITE(1,*) '*** Call to S15ADF',X,S15ADF,IFAIL
-      ENDIF
       RETURN
       END
 C

@@ -138,7 +138,7 @@ void c_g05eyf_( double *rv, int *nr, int *k ) {
     char cseed[256];
     sprintf(cseed,"%ld",seed);
     if ( setenv("GSL_RNG_SEED",cseed,1) ) {
-      fprintf(stderr,"error setting GSL_RNG_SEED\n");
+      fprintf(stderr,"c_g05eyf: error setting GSL_RNG_SEED\n");
       exit(EXIT_FAILURE);
     }
     gsl_rng_env_setup();
@@ -164,14 +164,12 @@ void c_g05eyf_( double *rv, int *nr, int *k ) {
  *
  */
 
-double c_s14aaf_(double *x, int *ifail) {
-
-  double f;
+double c_s14aaf_( double *x, int ifail ) {
   feclearexcept(FE_ALL_EXCEPT);
-  f = tgamma(*x);
-  *ifail = 0;
+  double f = tgamma(*x);
+  ifail = 0;
   if ( fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW) ) {
-    *ifail = 1;
+    ifail = 1;
   }
   return f;
 }
@@ -184,14 +182,12 @@ double c_s14aaf_(double *x, int *ifail) {
  *
  */
 
-double c_s14abf_(double *x, int *ifail) {
-
-  double f;
+double c_s14abf_(double *x, int ifail) {
   feclearexcept(FE_ALL_EXCEPT);
-  f = lgamma(*x);
-  *ifail = 0;
+  double f = lgamma(*x);
+  ifail = 0;
   if ( fetestexcept(FE_DIVBYZERO|FE_OVERFLOW) ) {
-    *ifail = 1;
+    ifail = 1;
   }
   return f;
 }
@@ -204,14 +200,12 @@ double c_s14abf_(double *x, int *ifail) {
  *
  */
 
-double c_s15adf_(double *x, int *ifail) {
-
-  double f;
+double c_s15adf_(double *x, int ifail) {
   feclearexcept(FE_ALL_EXCEPT);
-  f = erfc(*x);
-  *ifail = 0;
+  double f = erfc(*x);
+  ifail = 0;
   if ( fetestexcept(FE_UNDERFLOW) ) {
-    *ifail = 1;
+    ifail = 1;
   }
   return f;
 }
