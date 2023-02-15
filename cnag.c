@@ -81,7 +81,7 @@ void c_g05ecf_( double *mu, double *rv, int *nr ) {
  * (Uses GSL)
  */
 
-int c_g05eyf_( double *rv, int *nr) {
+int c_g05eyf_( double *rv, int *nr ) {
   /* initialize the GSL random number generator once */
   if ( gsl_rng_init ) {
     srand(time(NULL));
@@ -120,12 +120,25 @@ double c_s14aaf_( double *x, int *ifail ) {
   /* check for function math errors */
   *ifail = 0;
   if ( fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW) ) {
-    *ifail = 1;
-    if ( errno == EDOM ) {
-      fprintf(stderr,"c_s14aaf: negative domain error calling tgamma()\n");
+    if ( errno == ERANGE ) {
+	fprintf(stderr,"c_s14aaf: ");
+      if ( fetestexcept(FE_OVERFLOW) ) {
+	*ifail = 1;
+	fprintf(stderr,"argument too large and positive. ");
+      }
+      if ( fetestexcept(FE_UNDERFLOW) ) {
+	*ifail = 2;
+	fprintf(stderr,"argument too large and negative. ");
+      }
+      if ( fetestexcept(FE_DIVBYZERO) ) {
+	*ifail = 3;
+	fprintf(stderr,"argument too close to zero. ");
+      }
+      fprintf(stderr,"Range error when calling tgamma().\n");
     }
-    else if ( errno == ERANGE ) {
-      fprintf(stderr,"c_s14aaf: domain error calling tgamma()\n");
+    else if ( errno == EDOM ) {
+      *ifail = 4;
+      fprintf(stderr,"c_s14aaf: argument is a negative integer. Domain error when calling tgamma().\n");
     }
   }
   return y;
