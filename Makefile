@@ -4,7 +4,7 @@ FFLAGS=-g -std=legacy -fno-automatic
 CC=gcc
 CFLAGS=-g
 
-OBJ=bessi0.o dpchim.o dqk15i.o r1mach.o xerprt.o zasyi.o zlog.o zunhj.o \
+OBJ=dpchim.o dqk15i.o r1mach.o xerprt.o zasyi.o zlog.o zunhj.o \
     bessi1.o dpchst.o dqk15w.o rksuite.o xerror.o zbesi.o zmlri.o zuni1.o \
     cnag.o dqagie.o dqpsrt.o s88fmt.o xerrwv.o zbinu.o zmlt.o zuni2.o \
     dchfdv.o dqagi.o dqwgtf.o xerabt.o xersav.o zbknu.o zrati.o zunik.o \
