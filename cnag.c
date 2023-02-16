@@ -42,6 +42,9 @@ static gsl_rng *r;
 /*
  * G05DDF returns a pseudo-random real number taken from a Normal 
  * (Gaussian) distribution with mean a and standard deviation b.
+ *
+ * This wapper uses the GSL Random Number Distribution functions.
+ *
  */
 
 double c_g05ddf_( double *a, double *b ) {
@@ -65,9 +68,11 @@ double c_g05ddf_( double *a, double *b ) {
 }
 
 /*
- * G05CEF sets up the reference vector rv of dimension nr for a Poisson distribution
- * with mean mu.
- * (Uses GSL)
+ * G05CEF sets up the reference vector rv of dimension nr for a Poisson 
+ * distribution with mean mu.
+ *
+ * This wapper uses the GSL Random Number Distribution functions.
+ *
  */
 
 void c_g05ecf_( double *mu, double *rv, int *nr ) {
@@ -80,7 +85,9 @@ void c_g05ecf_( double *mu, double *rv, int *nr ) {
 /*
  * G05EYF returns a pseudo-random integer taken from a discrete distribution 
  * defined by a reference vector.
- * (Uses GSL)
+ *
+ * This wapper uses the GSL Random Number Generation functions.
+ *
  */
 
 int c_g05eyf_( double *rv, int *nr ) {
@@ -110,7 +117,7 @@ int c_g05eyf_( double *rv, int *nr ) {
 }
 
 /*
- * S14AAF returns the value of the Gamma function, via the routine name
+ * S14AAF returns the value of the Gamma function.
  *
  * This wapper uses the GNU C Library function tgamma().
  *
@@ -171,8 +178,7 @@ double c_s14abf_( double *x, int *ifail ) {
 }
 
 /*
- * S15ADF returns the value of the complementary error function, erfc x,
- * via the routine name.
+ * S15ADF returns the value of the complementary error function erfc x.
  *
  * This wapper uses the GNU C Library function erfc().
  *
@@ -192,7 +198,7 @@ double c_s15adf_( double *x, int *ifail ) {
 
 /*
  * S18AEF returns the value of the modiﬁed Bessel Function of zeroth
- * order I0(x) via the routine name. On overflow, function returns inf.
+ * order I0(x). On overflow, function returns inf.
  *
  * This wapper uses the GSL Bessel functions.
  *
@@ -214,7 +220,7 @@ double c_s18aef_( double *x, int *ifail ) {
 
 /*
  * S18AFF returns the value of the modiﬁed Bessel Function of first
- * order I1(x) via the routine name. On overflow, function returns inf.
+ * order I1(x). On overflow, function returns inf.
  *
  * This wapper uses the GSL Bessel functions.
  *
@@ -254,7 +260,7 @@ double c_x05baf_() {
  *
  */
 
-double c_d1mach_(int *i) {
+double c_d1mach_( int *i ) {
   switch (*i) {
   case 1:
     return DBL_MIN;
