@@ -158,9 +158,11 @@ double c_s14abf_( double *x, int *ifail ) {
   *ifail = 0;
   /* check for function math errors */
   if ( fetestexcept(FE_DIVBYZERO) ) {
+    fprintf(stderr,"c_s14abf: argument is a non-positive integer. Range error when calling lgamma().\n");
     *ifail = 1;
   }
   if ( fetestexcept(FE_OVERFLOW) ) {
+    fprintf(stderr,"c_s14abf: argument too large and positive. Range error when calling lgamma().\n");
     *ifail = 2;
   }
   return f;

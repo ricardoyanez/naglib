@@ -323,6 +323,9 @@ C
       FUNCTION S14ABF(X,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       S14ABF=c_s14abf(X,IFAIL)
+      IF (IFAIL.NE.0) THEN
+        S14ABF=0.0
+      END IF
       RETURN
       END
 C
