@@ -251,7 +251,7 @@ INTEGER IFAIL
 REAL X
 ```
 
-The **S18AEF** routine is replaced by the [Numerical Recipes](#numerical-recipes-in-fortran-77) **BESSI0** function.
+The **S18AEF** routine is replaced by a C wrapper that calls the [GSL Library](#gsl-library)  Bessel functions.
 
 ### S18AFF
 
@@ -263,7 +263,7 @@ INTEGER IFAIL
 REAL X
 ```
 
-The **S18AFF** routine is replaced by the [Numerical Recipes](#numerical-recipes-in-fortran-77) **BESSI1** function.
+The **S18AFF** routine is replaced by a C wrapper that calls the [GSL Library](#gsl-library)  Bessel functions.
 
 ### S18DEF
 

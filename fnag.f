@@ -361,16 +361,12 @@ C
 C     S18AFF returns the value of the modified Bessel Function I1(x), via the
 C     routine name.
 C
-C     The Numerical Recipes BESSI1 function is used to substitute S18AFF.
+C     The C function c_s18aff is used to substitute S18AFF by calling GSL
+C     functions.
 C
       FUNCTION S18AFF(X,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
-      S18AFF=BESSI1(X)
-      IFAIL=0
-      WRITE(*,*) '*** Call to S18AFF',S18AFF,IFAIL
-      WRITE(*,*) 'Warning: This function has not been tested.'
-      WRITE(*,*) 'Please report fort.10 to ricardo.yanez@calel.org.'
-      STOP
+      S18AFF=c_s18aff(X,IFAIL)
       RETURN
       END
 C

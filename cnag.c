@@ -191,8 +191,8 @@ double c_s15adf_( double *x, int *ifail ) {
 }
 
 /*
- * S18AEF returns the value of the modiﬁed Bessel Function I0(x),
- * via the routine name. On overflow, function returns inf.
+ * S18AEF returns the value of the modiﬁed Bessel Function of zeroth
+ * order I0(x) via the routine name. On overflow, function returns inf.
  *
  * This wapper uses the GSL Bessel functions.
  *
@@ -206,6 +206,28 @@ double c_s18aef_( double *x, int *ifail ) {
   if ( status ) {
     if ( GSL_ERANGE ) {
       fprintf(stderr,"c_s18aef: Range error in GSL.\n");
+    }
+    *ifail = 1;
+  }
+  return result.val;
+}
+
+/*
+ * S18AFF returns the value of the modiﬁed Bessel Function of first
+ * order I1(x) via the routine name. On overflow, function returns inf.
+ *
+ * This wapper uses the GSL Bessel functions.
+ *
+ */
+
+double c_s18aff_( double *x, int *ifail ) {
+  gsl_sf_result result;
+  gsl_set_error_handler_off();
+  int status = gsl_sf_bessel_I1_e(*x,&result);
+  *ifail = 0;
+  if ( status ) {
+    if ( GSL_ERANGE ) {
+      fprintf(stderr,"c_s18aff: Range error in GSL.\n");
     }
     *ifail = 1;
   }
