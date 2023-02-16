@@ -176,13 +176,14 @@ double c_s14abf_( double *x, int *ifail ) {
  *
  */
 
-double c_s15adf_( double *x, int ifail ) {
+double c_s15adf_( double *x, int *ifail ) {
   feclearexcept(FE_ALL_EXCEPT);
   double f = erfc(*x);
-  ifail = 0;
+  *ifail = 0;
   /* check for function math errors */
   if ( fetestexcept(FE_UNDERFLOW) ) {
-    ifail = 1;
+    fprintf(stderr,"c_s15adf: argument too large and negative. Error when calling erfc().\n");
+    *ifail = 1;
   }
   return f;
 }
