@@ -322,7 +322,7 @@ C     The C function c_s14abf is used to substitute S14ABF by calling lgamma().
 C
       FUNCTION S14ABF(X,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
-      S14ABF = c_s14abf(X,IFAIL)
+      S14ABF=c_s14abf(X,IFAIL)
       RETURN
       END
 C
@@ -335,7 +335,7 @@ C     The C function c_s15adf is used to substitute S15ADF by calling erfc().
 C
       FUNCTION S15ADF(X,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
-      S15ADF = c_s15adf(X,IFAIL)
+      S15ADF=c_s15adf(X,IFAIL)
       RETURN
       END
 C
