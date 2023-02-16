@@ -246,7 +246,7 @@ The **S15ADF** routine is substituted with a C wrapper function that calls **erf
 Returns the value of the modified Bessel Function _I0(x)_, via the routine name.
 
 ```Fortran
-REAL FUNCTION S18AEF(X, IFAIL)
+REAL FUNCTION S18AEF(X,IFAIL)
 INTEGER IFAIL
 REAL X
 ```
@@ -258,7 +258,7 @@ The **S18AEF** routine is replaced by a C wrapper that calls the [GSL Library](#
 Returns the value of the modified Bessel Function _I1(x)_, via the routine name.
 
 ```Fortran
-REAL FUNCTION S18AFF(X, IFAIL)
+REAL FUNCTION S18AFF(X,IFAIL)
 INTEGER IFAIL
 REAL X
 ```
