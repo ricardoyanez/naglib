@@ -121,7 +121,7 @@ double c_s14aaf_( double *x, int *ifail ) {
   *ifail = 0;
   if ( fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW) ) {
     if ( errno == ERANGE ) {
-	fprintf(stderr,"c_s14aaf: ");
+      fprintf(stderr,"c_s14aaf: ");
       if ( fetestexcept(FE_OVERFLOW) ) {
 	*ifail = 1;
 	fprintf(stderr,"argument too large and positive. ");
@@ -152,13 +152,16 @@ double c_s14aaf_( double *x, int *ifail ) {
  *
  */
 
-double c_s14abf_( double *x, int ifail ) {
+double c_s14abf_( double *x, int *ifail ) {
   feclearexcept(FE_ALL_EXCEPT);
   double f = lgamma(*x);
-  ifail = 0;
+  *ifail = 0;
   /* check for function math errors */
-  if ( fetestexcept(FE_DIVBYZERO|FE_OVERFLOW) ) {
-    ifail = 1;
+  if ( fetestexcept(FE_DIVBYZERO) ) {
+    *ifail = 1;
+  }
+  if ( fetestexcept(FE_OVERFLOW) ) {
+    *ifail = 2;
   }
   return f;
 }
