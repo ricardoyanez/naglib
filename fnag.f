@@ -347,16 +347,12 @@ C
 C     S18AEF returns the value of the modified Bessel Function I0(x), via the
 C     routine name.
 C
-C     The Numerical Recipes BESSI0 function is used to substitute S18AEF.
+C     The C function c_s18aef is used to substitute S18AEF by calling GSL
+C     functions.
 C
       FUNCTION S18AEF(X,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
-      S18AEF=BESSI0(X)
-      IFAIL=0
-      WRITE(*,*) '*** Call to S18AEF',S18AEF,IFAIL
-      WRITE(*,*) 'Warning: This function has not been tested.'
-      WRITE(*,*) 'Please report fort.10 to ricardo.yanez@calel.org.'
-      STOP
+      S18AEF=c_s18aef(X,IFAIL)
       RETURN
       END
 C
