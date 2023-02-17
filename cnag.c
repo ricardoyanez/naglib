@@ -20,24 +20,7 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
-#include <math.h>
-#include <fenv.h>
-#include <errno.h>
-#include <float.h>
-
-#include <gsl/gsl_errno.h>
-#include <gsl/gsl_rng.h>
-#include <gsl/gsl_cdf.h>
-#include <gsl/gsl_randist.h>
-#include <gsl/gsl_sf.h>
-
-static bool gsl_rng_init = true;
-const gsl_rng_type *T;
-static gsl_rng *r;
+#include "cnag.h"
 
 /*
  * G05DDF returns a pseudo-random real number taken from a Normal 
