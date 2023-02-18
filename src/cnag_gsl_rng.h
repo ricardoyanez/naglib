@@ -18,7 +18,6 @@
 #define _CNAG_RNG_
 
 static bool gsl_rng_init = true;
-/* const gsl_rng_type *T; */
 static gsl_rng *r;
 
 #endif
