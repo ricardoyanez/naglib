@@ -290,9 +290,9 @@ REAL FUNCTION X05BAF()
 
 The **X05BAF** routine is substituted with a C wrapper function that calls **clock()**.
 
-## AMOS - Bessel Functions
+## AMOS - Bessel Functions of complex argument
 
-The AMOS routines for evaluating Bessel functions are distributed by [Netlib](https://netlib.org/amos/).
+The AMOS routines for evaluating Bessel functions of complex argument are distributed by [Netlib](https://netlib.org/amos/).
 
 <ins>REFERENCE</ins>
 

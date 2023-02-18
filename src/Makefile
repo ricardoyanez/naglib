@@ -8,7 +8,7 @@ SRC=c_c05adf.c c_g05ddf.c c_g05ecf.c c_g05eyf.c c_s14aaf.c c_s14abf.c c_s15adf.c
 
 OBJ=$(SRC:%.c=%.o)
 
-cnag: cnag_glib.h cnag_gsl.h cnag_gsl_rgn.h cnag_gsl_roots.h $(SRC)
+cnag: cnag_glib.h cnag_gsl.h cnag_gsl_rng.h $(SRC)
 	$(GCC) $(CFLAGS) -fPIC -c $(SRC)
 	install -m 644 $(OBJ) ../
 

@@ -1,3 +1,5 @@
+# Written by Ricardo Yanez <ricardo.yanez@calel.org>
+
 F77=gfortran
 FFLAGS=-g -std=legacy -fno-automatic
 
@@ -6,14 +8,15 @@ CFLAGS=-g
 
 OBJ=dpchim.o dqk15i.o r1mach.o xerprt.o zasyi.o zlog.o zunhj.o \
     dpchst.o dqk15w.o rksuite.o xerror.o zbesi.o zmlri.o zuni1.o \
-    cnag.o dqagie.o dqpsrt.o s88fmt.o xerrwv.o zbinu.o zmlt.o zuni2.o \
+    dqagie.o dqpsrt.o s88fmt.o xerrwv.o zbinu.o zmlt.o zuni2.o \
     dchfdv.o dqagi.o dqwgtf.o xerabt.o xersav.o zbknu.o zrati.o zunik.o \
     dchfev.o dqawfe.o fdump.o xercnt.o xersve.o zs1s2.o zuoik.o \
     dgamln.o dqawoe.o fnag.o xerctl.o xgetua.o zbuni.o zseri.o zwrsk.o \
     dgtsl.o dqc25f.o fourpt.o xerhlt.o zabs.o zdiv.o zshch.o \
     dpchfd.o dqcheb.o i1mach.o xermsg.o zacai.o zexp.o zsqrt.o \
     dpchfe.o dqelg.o j4save.o xerprn.o zairy.o zkscl.o zuchk.o \
-    c_c05adf.o
+    c_c05adf.o c_d1mach.o c_g05ddf.o c_g05ecf.o c_g05eyf.o c_s14aaf.o \
+    c_s14abf.o c_s15adf.o c_s18aef.o c_s18aff.o c_x05baf.o
 
 install: libnag.so
 	install libnag.so /usr/local/lib
@@ -31,7 +34,6 @@ fnag.o:
 
 cnag.o:
 	$(MAKE) -C src
-	$(CC) $(CFLAGS) -fPIC -c cnag.c
 
 fourpt.o:
 	$(F77) $(FFLAGS) -fPIC -c fourpt.f

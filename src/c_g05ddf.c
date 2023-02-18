@@ -17,7 +17,7 @@
 
 */
 
-#include "cnag_gsl_rgn.h"
+#include "cnag_gsl_rng.h"
 
 /*
 
@@ -29,6 +29,7 @@
 */
 
 double c_g05ddf_( double *a, double *b ) {
+  const gsl_rng_type *T;
   /* initialize the GSL random number generator once */
   if ( gsl_rng_init ) {
     srand(time(NULL));

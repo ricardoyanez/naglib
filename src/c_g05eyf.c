@@ -17,7 +17,7 @@
 
 */
 
-#include "cnag_gsl_rgn.h"
+#include "cnag_gsl_rng.h"
 
 /*
 
@@ -29,7 +29,8 @@
 */
 
 int c_g05eyf_( double *rv, int *nr ) {
-  /* initialize the GSL random number generator once */
+  const gsl_rng_type *T;
+ /* initialize the GSL random number generator once */
   if ( gsl_rng_init ) {
     srand(time(NULL));
     long seed = rand();
