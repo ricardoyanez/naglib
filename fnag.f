@@ -24,12 +24,13 @@ C     C05ADF locates a zero of a continuous function in a given interval by
 C     combination of the methods of linear interpolation, extrapolation and
 C     bisection.
 C
-C     The Numerical Recipes ZBRENT function is used to substitute C05ADF.
+C     The C function c_c05adf is used to substitute C05ADF by calling GSL
+C     root-finding functions using Brent's method.
 C
       SUBROUTINE C05ADF(A,B,EPS,ETA,F,X,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL F
-      X=ZBRENT(F,A,B,ETA,IFAIL)
+      CALL c_c05adf(A,B,EPS,ETA,F,X,IFAIL)
       RETURN
       END
 C

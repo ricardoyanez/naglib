@@ -57,7 +57,7 @@ REAL A,B,EPS,ETA,F,X
 EXTERNAL F
 ```
 
-The **C05ADF** routine is replaced by the [Numerical Recipes](#numerical-recipes-in-fortran-77) **ZBRENT** function.
+The **C05ADF** routine is replaced by a C wrapper that uses root-finding algorithms from the [GSL Library](#gsl-library).
 
 ### C05AVF
 
