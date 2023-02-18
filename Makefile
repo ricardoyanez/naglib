@@ -39,9 +39,6 @@ fourpt.o:
 rksuite.o:
 	$(MAKE) -C rksuite
 
-nrf77.o:
-	$(MAKE) -C nrf77
-
 quadpack.o:
 	$(MAKE) -C quadpack
 
