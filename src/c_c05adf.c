@@ -17,27 +17,31 @@
 
 */
 
-#include "cnag.h"
+#include "cnag_gsl_roots.h"
 
-/* This function "casts" the external Fortran function
- * to a GSL function.
- */ 
+/*
+
+ This function "casts" the external Fortran function
+ to a GSL function.
+
+*/ 
 
 double g_c05adf(double x, void *params ) {
   return f_function(&x,params);
 }
 
 /*
- * NAG description: C05ADF locates a zero of a continuous function in a
- * given interval by combination of the methods of linear interpolation,
- * extrapolation and bisection.
- *
- * This wrapper uses GSL root-finding functions (Brent's method)
- *
- */
 
-void c_c05adf_( double *a, double *b, double *eps, double *eta, f_user_function *f,
-		double *x, int *ifail ) {
+ NAG description: C05ADF locates a zero of a continuous function in a
+ given interval by combination of the methods of linear interpolation,
+ extrapolation and bisection.
+
+ This wrapper uses GSL root-finding functions (Brent's method)
+
+*/
+
+void c_c05adf_( double *a, double *b, double *eps, double *eta,
+		f_user_function *f, double *x, int *ifail ) {
 
   int status;
   int iter = 0, max_iter = 100;

@@ -3,11 +3,12 @@
 GCC=gcc
 CFLAGS=-g -Wall
 
-SRC=c_c05adf.c
+SRC=c_c05adf.c c_g05ddf.c c_g05ecf.c c_g05eyf.c c_s14aaf.c c_s14abf.c c_s15adf.c \
+    c_s18aef.c c_s18aff.c c_x05baf.c c_d1mach.c
 
 OBJ=$(SRC:%.c=%.o)
 
-cnag: cnag.h $(SRC)
+cnag: cnag_glib.h cnag_gsl.h cnag_gsl_rgn.h cnag_gsl_roots.h $(SRC)
 	$(GCC) $(CFLAGS) -fPIC -c $(SRC)
 	install -m 644 $(OBJ) ../
 

@@ -17,12 +17,10 @@
 
 */
 
-#include <gsl/gsl_errno.h>
-#include <gsl/gsl_math.h>
-#include <gsl/gsl_roots.h>
+#include "cnag_gsl.h"
 
-#ifndef _CNAG
-#define _CNAG
+#ifndef _CNAG_GSL_ROOTS_
+#define _CNAG_GSL_ROOTS_
 
 /* typedef of the external Fortran function */
 typedef double (f_user_function)(double *, void *);

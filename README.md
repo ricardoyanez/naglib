@@ -19,7 +19,7 @@ Your system needs the GNU Fortran compiler, and the Standard C library and the [
 
 ## Usage
 
-The shared library `libnag.so` is installed in `/usr/local/lib`. Call a NAG routine with its normal syntax, and compile your code with `-lnag`,
+The shared library `libnag.so` is installed in `/usr/local/lib`. Call a NAG routine with its normal syntax, and compile your code with `-lnag` and the GSL libraries,
 
     $ gfortan -o myprog myprof.f -lnag -lgsl -lgslcblas -lm
     
@@ -306,9 +306,9 @@ The routine **FOURPT** is a Fortran port of the procedure by Gill and Miller wri
 
 Gill P. E. and Miller G. F. (1972) An algorithm for the integration of unequally spaced data, *Comput. J.* 15 80–83.
 
-## Numerical Recipes in Fortran 77
+## GSL Library
 
-Whomever has purchased a copy of *Numerical Recipes in Fortran 77: The Art of Scientific Computing* by William Press, Brian Flannery, Saul Teukolsky and William Vetterling, is entitled to use the machine readable programs for personal use. Since distributing a copy is explicitly forbidden, the Numerical Recipes source codes will have to be placed in the `nrf77` directory. It will be assumed that any interested person in GRAZING has a personal copy of this excellent book.
+The [GNU Scientific Library](https://www.gnu.org/software/gsl/) (GSL) is a numerical C and C++ library licensed under the GNU General Public License. The library includes a broad range of numerical subject areas.
 
 ## PCHIP - Piecewise Cubic Hermite Interpolation Package
 
@@ -329,10 +329,6 @@ R. Piessens, E. De Doncker-Kapenga and C. W. Überhuber. QUADPACK: a subroutine 
 ## RKSUITE - a suite of Runde-Kutta codes
 
 [RKSUITE](https://netlib.sandia.gov/ode/rksuite/) is a suite of Runde-Kutta codes that is available free of charge to the scientific community. It has no discernable license.
-
-## GSL Library
-
-The [GNU Scientific Library](https://www.gnu.org/software/gsl/) (GSL) is a numerical C and C++ library licensed under the GNU General Public License. The library includes a broad range of numerical subject areas.
 
 ## Bug Reporting
 
