@@ -89,7 +89,7 @@ REAL F,BOUND,EPSABS,EPSREL,RESULT,ABSERR,W(LW)
 EXTERNAL F
 ```
 
-The **D01AMF** routine is replaced by [QUADPACK](#quadpack---numerical-integration) routine **DQAGI**.
+The **D01AMF** routine is replaced by [QUADPACK](#quadpack---numerical-integration) using the [GSL Library](#gsl-library) implementation of the routine **QAGI**.
 
 ### D01ASF
 

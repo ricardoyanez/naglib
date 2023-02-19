@@ -21,20 +21,19 @@
 
 /*
 
- This function "casts" the external Fortran function
- to a GSL function.
+ This function "casts" the external Fortran function to a GSL function.
 
 */ 
 
 double g_c05adf(double x, void *params ) {
-  return f_function(&x,params);
+  return f_c05adf(&x,params);
 }
 
 /*
 
- NAG description: C05ADF locates a zero of a continuous function in a
- given interval by combination of the methods of linear interpolation,
- extrapolation and bisection.
+ C05ADF locates a zero of a continuous function in a given interval by
+ combination of the methods of linear interpolation, extrapolation and
+ bisection.
 
  This wrapper uses GSL root-finding functions (Brent's method)
 
@@ -49,7 +48,7 @@ void c_c05adf_( double *a, double *b, double *eps, double *eta,
   gsl_root_fsolver *s;
   gsl_function F;
 
-  f_function = f;
+  f_c05adf = f;
   F.function = g_c05adf;
   F.params = 0;
 

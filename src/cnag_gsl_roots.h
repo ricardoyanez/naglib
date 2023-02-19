@@ -19,6 +19,6 @@
 
 /* typedef of the external Fortran function */
 typedef double (f_user_function)(double *, void *);
-f_user_function *f_function;
+f_user_function *f_c05adf;
 
 #endif
