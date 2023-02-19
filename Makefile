@@ -50,6 +50,9 @@ amos.o:
 pchip.o:
 	$(MAKE) -C pchip
 
+nagtest: nagtest.f
+	$(F77) $(FFLAGS) -o nagtest nagtest.f -lnag `pkg-config --libs gsl`
+
 clean:
 	rm -f *.o *.so fort.* *~
 	$(MAKE) -C src clean
