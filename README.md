@@ -27,6 +27,15 @@ or
 
     $ gfortan -o myprog myprof.f -lnag `pkg-config --libs gsl`
 
+## Test program
+
+The code `nagtest.f` contains a series of tests suggested in the NAG documentation of each routine (see documents in `docs/`). To run the tests,
+
+    $ make nagtest
+    $ ./nagtest 2>/dev/null
+
+The output of each subroutine can be checked against the output shown in the documentation.
+
 ## NAG Routine Replacements
 
 The following approach has been adopted:
