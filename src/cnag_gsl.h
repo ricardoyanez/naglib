@@ -31,4 +31,7 @@
 #include <gsl/gsl_sf.h>
 #include <gsl/gsl_integration.h>
 
+/* typedef of the external Fortran function */
+typedef double (f_user_function)(double *, void *);
+
 #endif
