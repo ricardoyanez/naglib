@@ -18,24 +18,23 @@ C      call test_g05eyf
 C
 C     ------------------------------------------------------------------------
 C
-      FUNCTION F1(X)
+      FUNCTION FDF(X)
       IMPLICIT REAL*8(A-H,O-Z)
-      F1=DEXP(-X)-X
+      FDF=DEXP(-X)-X
       RETURN
       END
 C
       SUBROUTINE TEST_C05ADF
       IMPLICIT REAL*8(A-H,O-Z)
       INTEGER IFAIL
-      EXTERNAL F1
-      EXTERNAL C05ADF
+      EXTERNAL FDF
       A=0.0D0
       B=1.0D0
       EPS=1.0D-5
       ETA=0.0D0
       IFAIL=1
 
-      CALL C05ADF(A,B,EPS,ETA,F1,X,IFAIL)
+      CALL C05ADF(A,B,EPS,ETA,FDF,X,IFAIL)
 
       WRITE(*,'(/,a)') 'C05ADF Example Program Results'
       IF (IFAIL.EQ.0) THEN

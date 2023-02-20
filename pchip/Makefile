@@ -5,7 +5,8 @@
 F77=gfortran
 FFLAGS=-g -std=legacy -fno-automatic
 
-SRC=dpchim.f dpchst.f dpchfe.f dchfev.f dpchfd.f dchfdv.f xermsg.f xerprn.f xerhlt.f xersve.f xercnt.f
+SRC=dpchim.f dpchst.f dpchfe.f dchfev.f dpchfd.f dchfdv.f xermsg.f xerprn.f xerhlt.f xersve.f xercnt.f \
+    xgetua.f j4save.f fdump.f
 OBJ=$(SRC:%.f=%.o)
 
 pchip:
@@ -41,6 +42,15 @@ ifeq (,$(wildcard xersve.f))
 endif
 ifeq (,$(wildcard xercnt.f))
 	wget https://netlib.org/slatec/src/xercnt.f
+endif
+ifeq (,$(wildcard xgetua.f))
+	wget https://netlib.org/slatec/src/xgetua.f
+endif
+ifeq (,$(wildcard j4save.f))
+	wget https://netlib.org/slatec/src/j4save.f
+endif
+ifeq (,$(wildcard fdump.f))
+	wget https://netlib.org/slatec/src/fdump.f
 endif
 	$(F77) $(FFLAGS) -fPIC -c $(SRC)
 	install -m 644 $(OBJ) ../
