@@ -26,7 +26,7 @@
 
 */
 
-long c_i1mach_( int *i ) {
+int c_i1mach_( int *i ) {
   switch ( *i ) {
   case 1:
     return 5;    /* standard input */
