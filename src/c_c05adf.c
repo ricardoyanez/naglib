@@ -17,13 +17,15 @@
 
 */
 
-#include "cnag_gsl_roots.h"
+#include "cnag_gsl.h"
 
 /*
 
  This function "casts" the external Fortran function to a GSL function.
 
 */ 
+
+f_user_function *f_c05adf;
 
 double g_c05adf(double x, void *params ) {
   return f_c05adf(&x,params);

@@ -17,13 +17,15 @@
 
 */
 
-#include "cnag_gsl_integration.h"
+#include "cnag_gsl.h"
 
 /*
 
  This function "casts" the external Fortran function to a GSL function.
 
 */ 
+
+f_user_function *f_d01amf;
 
 double g_d01amf(double x, void *params ) {
   return f_d01amf(&x,params);
@@ -51,13 +53,13 @@ void c_d01amf_( f_user_function *f, double *bound, int *inf, double *epsabs,
   F.params = 0;
 
   if ( *inf == 1 ) {
-    status = gsl_integration_qagiu(&F,*bound,*epsabs,*epsrel,1000,ws,result,abserr);
+    status = gsl_integration_qagiu(&F,*bound,*epsabs,*epsrel,ws->limit,ws,result,abserr);
   }
   else if ( *inf == -1 ) {
-    status = gsl_integration_qagil(&F,*bound,*epsabs,*epsrel,1000,ws,result,abserr);
+    status = gsl_integration_qagil(&F,*bound,*epsabs,*epsrel,ws->limit,ws,result,abserr);
   }
   else if ( *inf == 2 ) {
-    status = gsl_integration_qagi(&F,*epsabs,*epsrel,1000,ws,result,abserr);
+    status = gsl_integration_qagi(&F,*epsabs,*epsrel,ws->limit,ws,result,abserr);
   }
   else {
     fprintf(stderr,"c_d01amf: invalid integration range.\n");
