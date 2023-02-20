@@ -425,3 +425,14 @@ C
       D1MACH=c_d1mach(I)
       RETURN
       END
+C
+C     ------------------------------------------------------------------------
+C
+C     Returns integer machine constants
+C
+      INTEGER FUNCTION I1MACH(I)
+      IMPLICIT REAL*8(A-G,O-Z)
+      INTEGER I
+      I1MACH=c_i1mach(I)
+      RETURN
+      END
