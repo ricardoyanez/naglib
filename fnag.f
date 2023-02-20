@@ -52,7 +52,8 @@ C
 C     D01AMF calculates an approximation to the integral of a function f(x)
 C     over an infinite or semi-infinite interval.
 C
-C     The QUADPACK routine DQAGI is used to substitute D01AMF.
+C     The QUADPACK routine QAGI is used to substitute D01AMF, as implemented
+C     by GSL.
 C
       SUBROUTINE D01AMF(F,BOUND,INF,EPSABS,EPSREL,RESULT,ABSERR,
      &     W,LW,IW,LIW,IFAIL)
@@ -68,24 +69,19 @@ C
 C     D01ASF calculates an approximation to the sine or the cosine transform
 C     of a function g over [a,inf)
 C
-C     The QUADPACK routine QAWFE is used to substitute D01ASF.
+C     The QUADPACK routine QAWF is used to substitute D01ASF, as implemented
+C     by GSL.
 C
       SUBROUTINE D01ASF(G,A,OMEGA,KEY,EPSABS,RESULT,ABSERR,
      &     LIMLST,LST,ERLST,RSLST,IERLST,W,LW,IW,LIW,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL G
-      INTEGER LIMIT,MAXP1
-      PARAMETER (LIMIT=500,MAXP1=50)
-      INTEGER NEVAL,IERLST(LIMLST)
-      DIMENSION ERLST(LIMLST)
-      DIMENSION ALIST(LIMIT),BLIST(LIMIT),RLIST(LIMIT),ELIST(LIMIT)
-      INTEGER IORD(LIMIT),NNLOG(LIMIT)
-      DIMENSION CHEBMO(MAXP1,25)
-      CALL DQAWFE(G,A,OMEGA,KEY,EPSABS,LIMLST,LIMIT,MAXP1,
-     &     RESULT,ABSERR,NEVAL,IFAIL,RSLST,ERLST,IERLST,LST,ALIST,BLIST,
-     &     RLIST,ELIST,IORD,NNLOG,CHEBMO)
+      CALL c_d01asf(G,A,OMEGA,KEY,EPSABS,RESULT,ABSERR,
+     &     LIMLST,LST,ERLST,RSLST,IERLST,W,LW,IW,LIW,IFAIL)
       RETURN
       END
+C
+C     ------------------------------------------------------------------------
 C
 C     D01GAF integrates a function which is specified numerically at four or
 C     more points, over the whole of its specified range, using third-order
@@ -393,6 +389,16 @@ C
       DO I=1,N
         CY(I)=DCMPLX(CYR(I),CYI(I))
       ENDDO
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
+C     NAG X01AAF provides the mathematical constant pi
+C
+      REAL*8 FUNCTION X01AAF()
+      IMPLICIT REAL*8(A-G,O-Z)
+      X01AAF=c_x01aaf()
       RETURN
       END
 C
