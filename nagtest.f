@@ -2,6 +2,7 @@
       IMPLICIT REAL*8(A-H,O-Z)
       CALL TEST_C05ADF
       CALL TEST_D01AMF
+      CALL TEST_D01ASF
 
 C      call test_g05ddf(37.d0,7.1d0)
 C      call test_g05eyf
@@ -28,13 +29,15 @@ C
       INTEGER IFAIL
       EXTERNAL F1
       EXTERNAL C05ADF
-      WRITE(*,'(/,a)') 'C05ADF Example Program Results'
-      A=0.0d0
-      B=1.0d0
-      EPS=1.0d-5
-      ETA=0.0d0
+      A=0.0D0
+      B=1.0D0
+      EPS=1.0D-5
+      ETA=0.0D0
       IFAIL=1
+
       CALL C05ADF(A,B,EPS,ETA,F1,X,IFAIL)
+
+      WRITE(*,'(/,a)') 'C05ADF Example Program Results'
       IF (IFAIL.EQ.0) THEN
         WRITE(*,'(/,A,G15.8)')'Zero =',X
       ELSE
@@ -48,7 +51,7 @@ C
       FUNCTION FST(X)
       IMPLICIT REAL*8(A-H,O-Z)
       COMMON /TELNUM/KOUNT
-      KOUNT = KOUNT + 1
+      KOUNT=KOUNT+1
       FST=1.0d0/((X+1.0d0)*DSQRT(X))
       RETURN
       END
@@ -62,19 +65,19 @@ C
       INTEGER IW(LIW)
       EXTERNAL FST
       COMMON /TELNUM/KOUNT
-      WRITE(*,'(/,a)') 'D01AMF Example Program Results'
-
-      EPSABS=0.0d0
-      EPSREL= 1.0d-09
-      A=0.0d0
+      EPSABS=0.0D0
+      EPSREL=1.0D-09
+      A=0.0D0
       INF=1
       KOUNT=0
       IFAIL=-1
+
       CALL D01AMF(FST,A,INF,EPSABS,EPSREL,RESULT,ABSERR,W,LW,IW,LIW,
      + IFAIL)
 
+      WRITE(*,'(/,a)') 'D01AMF Example Program Results'
       WRITE(*,999)'A - lower limit of integration = ',A
-      WRITE(*,'(1X,A)')'B - upper limit of integration = infinity'
+      WRITE(*,*)'B - upper limit of integration = infinity'
       WRITE(*,998)'EPSABS - absolute accuracy requested = ',
      + EPSABS
       WRITE(*,998)'EPSREL - relative accuracy requested = ',
@@ -100,14 +103,69 @@ C
 C
 C     ------------------------------------------------------------------------
 C
+      FUNCTION FSF(X)
+      IMPLICIT REAL*8(A-H,O-Z)
+      COMMON /TELNUM/KOUNT
+      KOUNT=KOUNT+1
+      FSF=0.0D0
+      IF (X.GT.0.0D0) FSF=1.0D0/DSQRT(X)
+      RETURN
+      END
+C
+      SUBROUTINE TEST_D01ASF
+      IMPLICIT REAL*8(A-H,O-Z)
+      INTEGER LW,LIW,LIMLST
+      PARAMETER (LW=800,LIW=LW/2,LIMLST=50)
+      INTEGER KOUNT
+      DIMENSION ERLST(LIMLST),RSLST(LIMLST),W(LW)
+      INTEGER IERLST(LIMLST),IW(LIW)
+      EXTERNAL FSF
+      COMMON /TELNUM/KOUNT
+      EPSABS=1.0D-09
+      A=0.0D0
+      INF=1
+      KOUNT=0
+      OMEGA=0.5D0*X01AAF()
+      INTEGR=1
+      IFAIL=-1
+
+      CALL D01ASF(FSF,A,OMEGA,INTEGR,EPSABS,RESULT,ABSERR,LIMLST,LST,
+     + ERLST,RSLST,IERLST,W,LW,IW,LIW,IFAIL)
+
+      WRITE(*,'(/,a)') 'D01ASF Example Program Results'
+      WRITE(*,999)'A - lower limit of integration = ',A
+      WRITE(*,*)'B - upper limit of integration = infinity'
+      WRITE(*,998)'EPSABS - absolute accuracy requested = ',
+     + EPSABS
+      WRITE(*,*)
+      IF (IFAIL.NE.0) WRITE(*,996)'IFAIL = ', IFAIL
+      IF (IFAIL.NE.6 .AND. IFAIL.NE.10) THEN
+        WRITE(*,997)'RESULT - approximation to the integral = ',
+     + RESULT
+        WRITE(*,998)'ABSERR - estimate of the absolute error = ',
+     + ABSERR
+        WRITE(*,996)'KOUNT - number of function evaluations = ',
+     + KOUNT
+        WRITE(*,996) 'LST - number of intervals used = ',LST
+        WRITE(*,996)
+     + 'IW(1) - max. no. of subintervals used in any one interval = ',
+     + IW(1)
+      END IF
+ 999  FORMAT(/,1X,A,F10.4)
+ 998  FORMAT(1X,A,G11.5)
+ 997  FORMAT(1X,A,F11.9)
+ 996  FORMAT(1X,A,I4)
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
       SUBROUTINE TEST_G05DDF(A,B)
       IMPLICIT REAL*8(A-H,O-Z)
       DIMENSION SPEC(1000)
-
       DO I=1,1000
         SPEC(I) = 0.0
       END DO
-
       DO I=1,1000000
         X = G05DDF(A,B)
         J = NINT(X*10.)
@@ -167,9 +225,9 @@ C
       IMPLICIT REAL*8(A-H,O-Z)
       INTEGER IFAIL
       DIMENSION X(11)
+      DATA X /1.0,1.25,1.5,1.75,2.0,5.0,10.0,20.0,1000.0,0.0,-5.0/
       WRITE(*,'(/,a)') 'S14ABF Example Program Results'
       WRITE(*,'(/,a)') '       X             Y             IFAIL'
-      DATA X /1.0,1.25,1.5,1.75,2.0,5.0,10.0,20.0,1000.0,0.0,-5.0/
       DO I=1,11
         IFAIL=0
         Y=S14ABF(X(I),IFAIL)

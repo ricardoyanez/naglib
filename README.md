@@ -102,7 +102,7 @@ Calculates an approximation to the sine or the cosine transform of a function _g
  REAL G,A,OMEGA,EPSABS,RESULT,ABSERR,ERLST(LIMLST),RSLST(LIMLST),W(LW)
  EXTERNAL G
 ```
-The **D01ASF** routine is replaced by [QUADPACK](#quadpack---numerical-integration) routine **QAWFE**.
+The **D01ASF** routine is replaced by [QUADPACK](#quadpack---numerical-integration) using the [GSL Library](#gsl-library) implementation of the routine **QAWF**.
 
 ### D01GAF
 
