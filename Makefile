@@ -28,7 +28,7 @@ install: libnag.so
 	@echo libnag.o installed in /usr/local/lib
 	@echo
 
-libnag.so: fnag.o fourpt.o amos.o pchip.o rksuite.o slatec.o
+libnag.so: fnag.o cnag.o fourpt.o amos.o pchip.o rksuite.o slatec.o
 	$(F77) -shared -o libnag.so $(OBJ)
 
 fnag.o:
