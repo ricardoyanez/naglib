@@ -5,10 +5,11 @@
 F77=gfortran
 FFLAGS=-g -std=legacy -fno-automatic
 
-SRC=zabs.f zbinu.f zseri.f zbuni.f zasyi.f zwrsk.f zmlri.f zuoik.f zexp.f \
-    zuni2.f zmlt.f zuni1.f zuchk.f zlog.f zbknu.f zdiv.f zrati.f zunik.f \
-    zsqrt.f zunhj.f zkscl.f zairy.f zshch.f zacai.f zs1s2.f xermsg.f \
-    xerprn.f xerhlt.f xersve.f xercnt.f xgetua.f j4save.f fdump.f i1mach.f
+SRC=zairy.f zbinu.f zdiv.f zlog.f zrati.f zshch.f zunhj.f zunik.f zabs.f \
+    zasyi.f zbknu.f zexp.f zmlri.f zs1s2.f zsqrt.f zuni1.f zuoik.f zacai.f \
+    zbuni.f zkscl.f zmlt.f zseri.f zuchk.f zuni2.f zwrsk.f \
+    xermsg.f xerprn.f xerhlt.f xersve.f xercnt.f \
+    xgetua.f j4save.f fdump.f i1mach.f
 OBJ=$(SRC:%.f=%.o)
 
 slatec:
@@ -103,16 +104,20 @@ ifeq (,$(wildcard xercnt.f))
 	wget https://netlib.org/slatec/src/xercnt.f
 endif
 ifeq (,$(wildcard xgetua.f))
+#	wget https://netlib.org/alliant/quad/xgetua.f
 	wget https://netlib.org/slatec/src/xgetua.f
 endif
 ifeq (,$(wildcard j4save.f))
+#	wget https://netlib.org/alliant/quad/j4save.f
 	wget https://netlib.org/slatec/src/j4save.f
 endif
 ifeq (,$(wildcard fdump.f))
+#	wget https://netlib.org/alliant/quad/fdump.f
 	wget https://netlib.org/slatec/src/fdump.f
 endif
 ifeq (,$(wildcard i1mach.f))
-	wget https://netlib.org/slatec/src/i1mach.f
+	wget https://netlib.org/port/i1mach.f
+#	wget https://netlib.org/slatec/src/i1mach.f
 endif
 	$(F77) $(FFLAGS) -fPIC -c $(SRC)
 	install -m 644 $(OBJ) ../

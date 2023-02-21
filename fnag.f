@@ -426,13 +426,3 @@ C
       RETURN
       END
 C
-C     ------------------------------------------------------------------------
-C
-C     Returns integer machine constants
-C
-c$$$      INTEGER FUNCTION I1MACH(I)
-c$$$      IMPLICIT REAL*8(A-G,O-Z)
-c$$$      INTEGER I
-c$$$      I1MACH=c_i1mach(I)
-c$$$      RETURN
-c$$$      END

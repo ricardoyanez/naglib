@@ -102,6 +102,13 @@ C
 C
 C     ------------------------------------------------------------------------
 C
+      SUBROUTINE TEST_E01BEF
+      IMPLICIT REAL*8(A-H,O-Z)
+      RETURN
+      END    
+C
+C     ------------------------------------------------------------------------
+C
       FUNCTION FSF(X)
       IMPLICIT REAL*8(A-H,O-Z)
       COMMON /TELNUM/KOUNT

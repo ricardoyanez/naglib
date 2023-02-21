@@ -1,14 +1,11 @@
-# Written by Ricardo Yanez <ricardo.yanez@calel.org>
-
-# PCHIP routines and dependencies
-
 F77=gfortran
 FFLAGS=-g -std=legacy -fno-automatic
 
-SRC=dpchim.f dpchst.f dpchfe.f dchfev.f dpchfd.f dchfdv.f
+SRC=dpchim.f dpchst.f dpchfe.f dchfev.f dpchfd.f dchfdv.f \
+
 OBJ=$(SRC:%.f=%.o)
 
-pchip:
+quadpack:
 ifeq (,$(wildcard dpchim.f))
 	wget https://netlib.org/slatec/pchip/dpchim.f
 endif

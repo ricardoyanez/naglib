@@ -46,6 +46,9 @@ amos.o:
 pchip.o:
 	$(MAKE) -C pchip
 
+quadpack.o:
+	$(MAKE) -C quadpack
+
 rksuite.o:
 	$(MAKE) -C rksuite
 

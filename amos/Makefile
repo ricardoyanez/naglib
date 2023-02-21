@@ -1,16 +1,15 @@
-# Written by Ricardo Yanez <ricardo.yanez@calel.org>
-
-# AMOS routines and dependencies
-
 F77=gfortran
 FFLAGS=-g -std=legacy -fno-automatic
 
-SRC=zbesi.f dgamln.f
+
+SRC=zbesi.f dgamln.f \
+
 OBJ=$(SRC:%.f=%.o)
 
-amos:
+quadpack:
 ifeq (,$(wildcard zbesi.f))
 	wget https://netlib.org/amos/zbesi.f
+	cp -af zbesi.f zbesi.f.orig
 endif
 ifeq (,$(wildcard dgamln.f))
 	wget https://netlib.org/amos/dgamln.f
