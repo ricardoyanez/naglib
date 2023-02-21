@@ -4,6 +4,9 @@
       CALL TEST_D01AMF
       CALL TEST_D01ASF
 
+      CALL TEST_E01BEF
+      CALL TEST_E01BFF
+
 C      call test_g05ddf(37.d0,7.1d0)
 C      call test_g05eyf
 
@@ -36,11 +39,11 @@ C
 
       CALL C05ADF(A,B,EPS,ETA,FDF,X,IFAIL)
 
-      WRITE(*,'(/,a)') 'C05ADF Example Program Results'
+      WRITE(*,'(/,A)')'** C05ADF Example Program Results **'
       IF (IFAIL.EQ.0) THEN
-        WRITE(*,'(/,A,G15.8)')'Zero =',X
+        WRITE(*,'(/,A,G15.8)')' Zero =',X
       ELSE
-        WRITE(*,'(/,A,I4)')'IFAIL =', IFAIL
+        WRITE(*,'(/,A,I4)')' IFAIL =', IFAIL
       END IF
       RETURN
       END
@@ -74,7 +77,7 @@ C
       CALL D01AMF(FST,A,INF,EPSABS,EPSREL,RESULT,ABSERR,W,LW,IW,LIW,
      + IFAIL)
 
-      WRITE(*,'(/,a)') 'D01AMF Example Program Results'
+      WRITE(*,'(/,A)')'** D01AMF Example Program Results **'
       WRITE(*,999)'A - lower limit of integration = ',A
       WRITE(*,*)'B - upper limit of integration = infinity'
       WRITE(*,998)'EPSABS - absolute accuracy requested = ',
@@ -99,13 +102,6 @@ C
  996  FORMAT(1X,A,I4)
       RETURN
       END
-C
-C     ------------------------------------------------------------------------
-C
-      SUBROUTINE TEST_E01BEF
-      IMPLICIT REAL*8(A-H,O-Z)
-      RETURN
-      END    
 C
 C     ------------------------------------------------------------------------
 C
@@ -138,7 +134,7 @@ C
       CALL D01ASF(FSF,A,OMEGA,INTEGR,EPSABS,RESULT,ABSERR,LIMLST,LST,
      + ERLST,RSLST,IERLST,W,LW,IW,LIW,IFAIL)
 
-      WRITE(*,'(/,a)') 'D01ASF Example Program Results'
+      WRITE(*,'(/,A)')'** D01ASF Example Program Results **'
       WRITE(*,999)'A - lower limit of integration = ',A
       WRITE(*,*)'B - upper limit of integration = infinity'
       WRITE(*,998)'EPSABS - absolute accuracy requested = ',
@@ -161,6 +157,68 @@ C
  998  FORMAT(1X,A,G11.5)
  997  FORMAT(1X,A,F11.9)
  996  FORMAT(1X,A,I4)
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
+      SUBROUTINE TEST_E01BEF
+      IMPLICIT REAL*8(A-H,O-Z)
+      PARAMETER (N=9,M=11)
+      DIMENSION X(N),F(N),D(N)
+      DIMENSION PF(M),PX(M)
+      DATA X /7.99,8.09,8.19,8.70,9.20,10.0,12.0,15.0,20.0/
+      DATA F /0.0D+0,0.27643D-4,0.43750D-1,0.16918D+0,0.46943D+0,
+     + 0.94374D+0,0.99864D+0,0.99992D+0,0.99999D+0/
+      IFAIL=0
+
+      CALL E01BEF(N,X,F,D,IFAIL)
+
+C     Compute M equally spaced points from X(1) to X(N).
+      STEP=(X(N)-X(1))/(M-1)
+      DO 40 I=1,M
+        PX(I)=DMIN1(X(1)+(I-1)*STEP,X(N))
+ 40   CONTINUE
+      IFAIL=0
+      CALL E01BFF(N,X,F,D,M,PX,PF,IFAIL)
+      WRITE(*,'(/,A)')'** E01BEF Example Program Results **'
+      WRITE(*,'(/A)')'                 Interpolated'
+      WRITE(*,'(A)')'      Abscissa          Value'
+      DO 60 I=1,M
+        WRITE(*,9999)PX(I),PF(I)
+ 60   CONTINUE
+ 9999 FORMAT(1X,F13.4,2X,F13.4)
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
+      SUBROUTINE TEST_E01BFF
+      IMPLICIT REAL*8(A-H,O-Z)
+      PARAMETER (N=9,M=11)
+      DIMENSION X(N),F(N),D(N)
+      DIMENSION PF(M),PX(M)
+      DATA X /7.99,8.09,8.19,8.70,9.20,10.0,12.0,15.0,20.0/
+      DATA F /0.0D+0,0.27643D-4,0.43750D-1,0.16918D+0,0.46943D+0,
+     + 0.94374D+0,0.99864D+0,0.99992D+0,0.99999D+0/
+      data d /0.0D+0,5.52510D-4,0.33587D+0,0.34944D+0,0.59696D+0,
+     + 6.03260D-2,8.98335D-4,2.93954D-5,0.0D+0/
+C     Compute M equally spaced points from X(1) to X(N).
+      STEP=(X(N)-X(1))/(M-1)
+      DO 40 I=1,M
+        PX(I)=DMIN1(X(1)+(I-1)*STEP,X(N))
+ 40   CONTINUE
+      IFAIL=0
+
+      CALL E01BFF(N,X,F,D,M,PX,PF,IFAIL)
+
+      WRITE(*,'(/A)')'** E01BFF Example Program Results **'
+      WRITE(*,'(/A)')'                 Interpolated'
+      WRITE(*,'(A)')'      Abscissa          Value'
+      DO 60 I=1,M
+        WRITE(*,9999)PX(I),PF(I)
+ 60   CONTINUE
+ 9999 FORMAT(1X,F13.4,2X,F13.4)
       RETURN
       END
 C
@@ -215,8 +273,8 @@ C
       INTEGER IFAIL
       DIMENSION X(8)
       DATA X /1.0,1.25,1.5,1.75,2.0,5.0,10.0,-1.5/
-      WRITE(*,'(/,a)') 'S14AAF Example Program Results'
-      WRITE(*,'(/,a)') '       X             Y             IFAIL'
+      WRITE(*,'(/,A)')'** S14AAF Example Program Results **'
+      WRITE(*,'(/,A)')'       X             Y             IFAIL'
       DO I=1,8
         IFAIL=0
         Y=S14AAF(X(I),IFAIL)
@@ -232,8 +290,8 @@ C
       INTEGER IFAIL
       DIMENSION X(11)
       DATA X /1.0,1.25,1.5,1.75,2.0,5.0,10.0,20.0,1000.0,0.0,-5.0/
-      WRITE(*,'(/,a)') 'S14ABF Example Program Results'
-      WRITE(*,'(/,a)') '       X             Y             IFAIL'
+      WRITE(*,'(/,A)')'** S14ABF Example Program Results **'
+      WRITE(*,'(/,A)')'       X             Y             IFAIL'
       DO I=1,11
         IFAIL=0
         Y=S14ABF(X(I),IFAIL)
@@ -249,8 +307,8 @@ C
       INTEGER IFAIL
       DIMENSION X(5)
       DATA X /-10.0,-1.0,0.0,1.0,10.0/
-      WRITE(*,'(/,a)') 'S15ADF Example Program Results'
-      WRITE(*,'(/,a)') '       X             Y             IFAIL'
+      WRITE(*,'(/,A)')'** S15ADF Example Program Results **'
+      WRITE(*,'(/,A)')'       X             Y             IFAIL'
       DO I=1,5
         IFAIL=0
         Y=S15ADF(X(I),IFAIL)
@@ -266,8 +324,8 @@ C
       INTEGER IFAIL
       DIMENSION X(10)
       DATA X /0.0,0.5,1.0,3.0,6.0,8.0,10.0,15.0,20.0,-1.0/
-      WRITE(*,'(/,a)') 'S18AEF Example Program Results'
-      WRITE(*,'(/,a)') '       X             Y             IFAIL'
+      WRITE(*,'(/,A)')'** S18AEF Example Program Results **'
+      WRITE(*,'(/,A)')'       X             Y             IFAIL'
       DO I=1,10
         IFAIL=0
         Y=S18AEF(X(I),IFAIL)
@@ -282,8 +340,8 @@ C
       IMPLICIT REAL*8(A-H,O-Z)
       DIMENSION X(10)
       DATA X /0.0,0.5,1.0,3.0,6.0,8.0,10.0,15.0,20.0,-1.0/
-      WRITE(*,'(/,a)') 'S18AFF Example Program Results'
-      WRITE(*,'(/,a)') '       X             Y             IFAIL'
+      WRITE(*,'(/,A)')'** S18AFF Example Program Results **'
+      WRITE(*,'(/,A)')'       X             Y             IFAIL'
       DO I=1,10
         IFAIL=0
         Y=S18AFF(X(I),IFAIL)
@@ -306,7 +364,7 @@ C
       CHARACTER*1 SCALE(5)
       DATA SCALE /'U','U','U','U','S'/
       COMPLEX*16 CY(N)
-      WRITE(*,'(/,a)')'S18DEF Example Program Results'
+      WRITE(*,'(/,A)')'** S18DEF Example Program Results **'
       WRITE(*,99997)'FNU','Z','SCALE','CY(1)','CY(2)','NZ','IFAIL'
 99997 FORMAT(/,3X,A,10X,A,9X,A,7X,A,14X,A,8X,A,2X,A)
       DO I=1,5
@@ -323,7 +381,7 @@ C     ------------------------------------------------------------------------
 C
       SUBROUTINE TEST_X05BAF
       IMPLICIT REAL*8(A-H,O-Z)
-      WRITE(*,'(/,a)')'X05BAF Example Program Results'
+      WRITE(*,'(/,A)')'** X05BAF Example Program Results **'
       S1=X05BAF()
       E=1.0
       T=1.0
