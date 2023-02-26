@@ -46,15 +46,19 @@ void c_d01asf_( f_user_function *f, double *a, double *omega, int *key, double *
 		int *ifail ) {
 
   int status;
-  gsl_integration_workspace *ws = gsl_integration_workspace_alloc(1000);
-  gsl_integration_workspace *wc = gsl_integration_workspace_alloc(1000);
+  size_t n = 1000;
+  gsl_integration_workspace *ws = gsl_integration_workspace_alloc(n);
+  gsl_integration_workspace *wc = gsl_integration_workspace_alloc(n);
   gsl_integration_qawo_table *wf;
-  
+
+  /* turn off default error handler */
+  gsl_set_error_handler_off();
+
   if ( *key == 1 ) {
-    wf = gsl_integration_qawo_table_alloc(*omega,1.0,GSL_INTEG_COSINE,1000);
+    wf = gsl_integration_qawo_table_alloc(*omega,1.0,GSL_INTEG_COSINE,n);
   }
   else if ( *key == 2 ) {
-    wf = gsl_integration_qawo_table_alloc(*omega,1.0,GSL_INTEG_SINE,1000);
+    wf = gsl_integration_qawo_table_alloc(*omega,1.0,GSL_INTEG_SINE,n);
   }
   else {
     fprintf(stderr,"c_d01asf: invalid integral key.\n");
@@ -73,21 +77,27 @@ void c_d01asf_( f_user_function *f, double *a, double *omega, int *key, double *
     *ifail = 0;
   }
   else if ( status == GSL_EMAXITER ) {
+    fprintf(stderr,"c_d01asf: the maximum number of subdivisions was exceeded.\n");
     *ifail = 1;
   }
   else if ( status == GSL_EROUND ) {
+    fprintf(stderr,"c_d01asf: cannot reach tolerance because of roundoff error, or roundoff error was detected in the extrapolation table.\n");
     *ifail = 2;
   }
   else if ( status == GSL_ESING ) {
+    fprintf(stderr,"c_d01asf: a non-integrable singularity or other bad integrand behavior was found in the integration interval.\n");
     *ifail = 3;
   }
   else if ( status == GSL_EDIVERGE ) {
+    fprintf(stderr,"c_d01asf: the integral is divergent, or too slowly convergent to be integrated numerically.\n");
     *ifail = 5;
   }
   else if ( status == GSL_EDOM ) {
+    fprintf(stderr,"c_d01asf: error in the values of the input arguments.\n");
     *ifail = 6;
   }
   else {
+    fprintf(stderr,"c_d01asf: unknown error (%d %s).\n",status,gsl_strerror(status));
     *ifail = 4;
   }
 
