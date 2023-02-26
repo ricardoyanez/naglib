@@ -3,6 +3,7 @@
       CALL TEST_C05ADF
       CALL TEST_D01AMF
       CALL TEST_D01ASF
+      CALL TEST_D01GAF
 
       CALL TEST_E01BEF
       CALL TEST_E01BFF
@@ -162,6 +163,41 @@ C
 C
 C     ------------------------------------------------------------------------
 C
+      SUBROUTINE TEST_D01GAF
+      IMPLICIT REAL*8(A-H,O-Z)
+      INTEGER NMAX
+      PARAMETER (NMAX=21)
+      DIMENSION X(NMAX),Y(NMAX)
+      DATA X /0.00,0.04,0.08,0.12,0.22,0.26,0.30,0.38,0.39,0.42,0.45,
+     +     0.46,0.60,0.68,0.72,0.73,0.83,0.85,0.88,0.90,1.00/
+      DATA Y /4.0000,3.9936,3.9746,3.9432,3.8153,3.7467,3.6697,3.4943,
+     +     3.4719,3.4002,3.3264,3.3014,2.9412,2.7352,2.6344,2.6094,
+     +     2.3684,2.3222,2.2543,2.2099,2.0000/
+      IFAIL=1
+      N=NMAX
+
+      CALL D01GAF(X,Y,N,ANS,ERROR,IFAIL)
+
+      WRITE(*,'(/,A)')'** D01GAF Example Program Results **'
+      IF (IFAIL.EQ.0) THEN
+        WRITE(*,9999)' Integral = ', ANS,
+     + '    Estimated error = ', ERROR
+      ELSE IF (IFAIL.EQ.1) THEN
+        WRITE(*,*)'Less than 4 points supplied'
+      ELSE IF (IFAIL.EQ.2) THEN
+        WRITE(*,*)
+     + 'Points not in increasing or decreasing order'
+      ELSE IF (IFAIL.EQ.3) THEN
+        WRITE(*,*)'Points not all distinct'
+      ELSE
+        WRITE(*,*)'More than NMAX data points'
+      END IF
+ 9999 FORMAT (/,A,F12.9,A,F7.4)
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
       SUBROUTINE TEST_E01BEF
       IMPLICIT REAL*8(A-H,O-Z)
       PARAMETER (N=9,M=11)
@@ -169,7 +205,7 @@ C
       DIMENSION PF(M),PX(M)
       DATA X /7.99,8.09,8.19,8.70,9.20,10.0,12.0,15.0,20.0/
       DATA F /0.0D+0,0.27643D-4,0.43750D-1,0.16918D+0,0.46943D+0,
-     + 0.94374D+0,0.99864D+0,0.99992D+0,0.99999D+0/
+     +     0.94374D+0,0.99864D+0,0.99992D+0,0.99999D+0/
       IFAIL=0
 
       CALL E01BEF(N,X,F,D,IFAIL)
