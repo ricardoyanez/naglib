@@ -50,22 +50,25 @@ void c_c05adf_( double *a, double *b, double *eps, double *eta,
   gsl_root_fsolver *s;
   gsl_function F;
 
+  double x_lower = *a;
+  double x_upper = *b;
+
   f_c05adf = f;
   F.function = g_c05adf;
   F.params = 0;
 
   T = gsl_root_fsolver_brent;
   s = gsl_root_fsolver_alloc(T);
-  gsl_root_fsolver_set(s,&F,*a,*b);
+  gsl_root_fsolver_set(s,&F,x_lower,x_upper);
 
   /* iterate for convergence */
   do {
     iter++;
     status = gsl_root_fsolver_iterate(s);
     *x = gsl_root_fsolver_root(s);
-    *a = gsl_root_fsolver_x_lower(s);
-    *b = gsl_root_fsolver_x_upper(s);
-    status = gsl_root_test_interval(*a,*b,0.,*eps);
+    x_lower = gsl_root_fsolver_x_lower(s);
+    x_upper = gsl_root_fsolver_x_upper(s);
+    status = gsl_root_test_interval(x_lower,x_upper,0.,*eps);
   } while ( status == GSL_CONTINUE && iter < max_iter );
   
   if ( status == GSL_SUCCESS ) {
