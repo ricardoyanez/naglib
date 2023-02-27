@@ -309,7 +309,7 @@ C     On entry, NR is too small
       NRMIN=INT(T+7.5*DSQRT(T)+8.5)-MAX(0,INT(T-7.15*DSQRT(T)))+4
       IF (NR.LE.NRMIN) THEN
         IFAIL=2
-      END IF
+      ENDIF
       IF (IFAIL.EQ.0) CALL c_g05ecf(T,R,NR)
       RETURN
       END

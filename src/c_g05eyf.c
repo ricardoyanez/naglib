@@ -46,7 +46,7 @@ int c_g05eyf_( double *rv, int *nr ) {
     r = gsl_rng_alloc(T);
     gsl_rng_init = false;
   }
-  double s = gsl_rng_uniform (r);
+  double s = gsl_rng_uniform(r);
   int i = 0;
   while ( 1 )  {
     if ( rv[i] > s ) break;
