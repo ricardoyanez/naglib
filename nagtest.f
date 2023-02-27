@@ -7,9 +7,8 @@
       CALL TEST_E01BEF
       CALL TEST_E01BFF
       CALL TEST_E01BGF
-
       CALL TEST_G05DDF
-C      call test_g05eyf
+      CALL TEST_G05ECF
 
       CALL TEST_S14AAF
       CALL TEST_S14ABF
@@ -303,7 +302,7 @@ C
 C
 C     ------------------------------------------------------------------------
 C
-      SUBROUTINE TEST_G05EYF
+      SUBROUTINE TEST_G05ECF
       IMPLICIT REAL*8(A-H,O-Z)
       INTEGER NR,IFAIL
       PARAMETER (NR=30)
@@ -311,14 +310,18 @@ C
       INTEGER G05EYF
       T=2.7
       IFAIL=0
+
       CALL G05ECF(T,R,NR,IFAIL)
-      IF ( IFAIL .EQ. 0 ) THEN
-        DO 20 I = 1,5
-          WRITE(*,*) G05EYF(R,NR)
+
+      WRITE(*,'(/A/)')'** G05ECF Example Program Results **'
+      IF (IFAIL.EQ.0) THEN
+        DO 20 I=1,5
+          WRITE(*,9999)G05EYF(R,NR)
  20     CONTINUE
       ELSE
         WRITE(*,'(A)')'Error in TEST_G05EYF'
-      END IF
+      ENDIF
+ 9999 FORMAT(1X,I5)
       RETURN
       END
 C

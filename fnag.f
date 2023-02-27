@@ -300,18 +300,17 @@ C
       SUBROUTINE G05ECF(T,R,NR,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION R(NR)
+      IFAIL=0
 C     On entry, T < 0
-      IF ( T < 0.0 ) THEN
+      IF (T.LT.0.0) THEN
         IFAIL=1
-        RETURN
-      END IF
+      ENDIF
 C     On entry, NR is too small
       NRMIN=INT(T+7.5*DSQRT(T)+8.5)-MAX(0,INT(T-7.15*DSQRT(T)))+4
-      IF ( NR .LE. NRMIN ) THEN
+      IF (NR.LE.NRMIN) THEN
         IFAIL=2
-        RETURN
       END IF
-      CALL c_g05ecf(T,R,NR)
+      IF (IFAIL.EQ.0) CALL c_g05ecf(T,R,NR)
       RETURN
       END
 C
