@@ -180,19 +180,15 @@ C
 
       WRITE(*,'(/,A)')'** D01GAF Example Program Results **'
       IF (IFAIL.EQ.0) THEN
-        WRITE(*,9999)' Integral = ', ANS,
-     + '    Estimated error = ', ERROR
+        WRITE(*,9999)' Integral = ', ANS,'  Estimated error = ', ERROR
       ELSE IF (IFAIL.EQ.1) THEN
-        WRITE(*,*)'Less than 4 points supplied'
+        WRITE(*,'(/A)')' Less than 4 points supplied'
       ELSE IF (IFAIL.EQ.2) THEN
-        WRITE(*,*)
-     + 'Points not in increasing or decreasing order'
+        WRITE(*,'(/A)')' Points not in increasing or decreasing order'
       ELSE IF (IFAIL.EQ.3) THEN
-        WRITE(*,*)'Points not all distinct'
-      ELSE
-        WRITE(*,*)'More than NMAX data points'
+        WRITE(*,'(/A)')' Points not all distinct'
       END IF
- 9999 FORMAT (/,A,F12.9,A,F7.4)
+ 9999 FORMAT (/A,F12.9,A,F7.4)
       RETURN
       END
 C

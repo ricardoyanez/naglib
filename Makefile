@@ -59,7 +59,7 @@ nagtest: nagtest.f
 	$(F77) $(FFLAGS) -o nagtest nagtest.f -lnag `pkg-config --libs gsl`
 
 clean:
-	rm -f *.o *.so fort.* *~ nagtest
+	rm -f *.o *.so fort.* *~
 	$(MAKE) -C src clean
 	$(MAKE) -C amos clean
 	$(MAKE) -C pchip clean

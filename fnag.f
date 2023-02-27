@@ -30,10 +30,10 @@ C
       SUBROUTINE C05ADF(A,B,EPS,ETA,F,X,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       EXTERNAL F
-      IF ( (EPS.LE.0.0) .OR. (A.EQ.B) .OR. (F(A)*F(B).GT.0.0) ) THEN
+      IF ((EPS.LE.0.0).OR.(A.EQ.B).OR.(F(A)*F(B).GT.0.0)) THEN
         IFAIL=1
         RETURN
-      END IF
+      ENDIF
       CALL c_c05adf(A,B,EPS,ETA,F,X,IFAIL)
       RETURN
       END
@@ -98,7 +98,37 @@ C
       SUBROUTINE D01GAF(X,Y,N,ANS,ER,IFAIL)
       IMPLICIT REAL*8(A-G,O-Z)
       DIMENSION X(N),Y(N)
-      CALL FOURPT(X,Y,N,ANS,ER,IFAIL)
+      LOGICAL INC
+      IFAIL=0
+      IF (N.LT.4) THEN
+        IFAIL=1
+      ELSE
+C       X is strictly increasing or decreasing
+        IF (X(1).LT.X(2)) THEN
+          INC=.TRUE.
+        ELSEIF (X(1).GT.X(2)) THEN
+          INC=.FALSE.
+        ELSE
+          IFAIL=2
+        ENDIF
+        DO I=1,N-1
+          IF (INC.AND.(X(I).GT.X(I+1))) THEN
+            IFAIL=2
+          ENDIF
+          IF (.NOT.INC.AND.(X(I).LT.X(I+1))) THEN
+            IFAIL=2
+          ENDIF
+C         Two points have the same X-value
+          DO J=I+1,N
+            IF (X(I).EQ.X(J)) THEN
+              IFAIL=3
+            ENDIF
+          ENDDO
+        ENDDO
+      ENDIF
+      ANS=0.0
+      ER=0.0
+      IF (IFAIL.EQ.0) CALL FOURPT(X,Y,N,ANS,ER)
       RETURN
       END
 C

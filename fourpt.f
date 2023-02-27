@@ -28,19 +28,14 @@ C     You should have received a copy of the GNU General Public License
 C     along with this program; if not, write to the Free Software
 C     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 C
-      SUBROUTINE FOURPT(X,Y,N,ANS,ER,IFAIL)
+      SUBROUTINE FOURPT(X,Y,N,ANS,ER)
       IMPLICIT NONE
-      INTEGER N,IFAIL
+      INTEGER N
       DOUBLE PRECISION X(N),Y(N),ANS,ER
       DOUBLE PRECISION E,H1,H2,H3,H4,R1,R2,R3,R4,D1,D2,D3,C,S,T
       INTEGER I,J,K
       ANS=0.0
       ER=0.0
-      IFAIL=0
-      IF (N.LT.4) THEN
-        IFAIL=1
-        RETURN
-      ENDIF
       T=0.0
       E=0.0
       S=0.0
