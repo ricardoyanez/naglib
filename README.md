@@ -13,9 +13,9 @@ Clone repository, enter source directory and compile,
    ```
 ## Dependencies
 
-Your system needs the GNU Fortran compiler, and the Standard C library and the [GSL Library](#gsl-library) development files.
+Your system needs sudo, git, make, the GNU Fortran compiler, and the [GSL Library](#gsl-library) development files.
 
-    $ sudo apt-get install gfortran libc6-dev libgsl-dev
+    $ sudo apt-get install sudo git make gfortran libgsl-dev
 
 ## Usage
 
