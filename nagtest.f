@@ -8,7 +8,7 @@
       CALL TEST_E01BFF
       CALL TEST_E01BGF
 
-C      call test_g05ddf(37.d0,7.1d0)
+      CALL TEST_G05DDF
 C      call test_g05eyf
 
       CALL TEST_S14AAF
@@ -287,24 +287,17 @@ C     Compute M equally spaced points from X(1) to X(N).
 C
 C     ------------------------------------------------------------------------
 C
-      SUBROUTINE TEST_G05DDF(A,B)
+      SUBROUTINE TEST_G05DDF
       IMPLICIT REAL*8(A-H,O-Z)
       DIMENSION SPEC(1000)
-      DO I=1,1000
-        SPEC(I) = 0.0
-      END DO
-      DO I=1,1000000
-        X = G05DDF(A,B)
-        J = NINT(X*10.)
-        IF ( J .GE. 1 .AND. J .LE. 1000 ) THEN
-          SPEC(J) = SPEC(J) + 1.0;
-        END IF
-      END DO
-      
-      DO I=1,1000
-        WRITE(*,*)I/10.,SPEC(I)
-      END DO
-
+      A=1.0
+      B=1.5
+      WRITE(*,'(/A/)')'** G05DDF Example Program Results **'
+      DO I=1,5
+        X=G05DDF(A,B)
+        WRITE(*,9999)X
+      ENDDO
+ 9999 FORMAT(1X,F10.4)
       RETURN
       END
 C
