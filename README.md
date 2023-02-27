@@ -13,7 +13,7 @@ Clone repository, enter source directory and compile,
    ```
 ## Dependencies
 
-Your system needs sudo, git, make, pkg-config, the GNU Fortran compiler, and the [GSL Library](#gsl-library) development files.
+Your system needs `sudo`, `git`, `make`, `pkg-config`, the GNU Fortran compiler, and the [GSL Library](#gsl-library) development files.
 
     $ sudo apt-get install sudo git make pkg-config gfortran libgsl-dev
 
