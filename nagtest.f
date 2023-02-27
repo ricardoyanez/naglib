@@ -4,9 +4,9 @@
       CALL TEST_D01AMF
       CALL TEST_D01ASF
       CALL TEST_D01GAF
-
       CALL TEST_E01BEF
       CALL TEST_E01BFF
+      CALL TEST_E01BGF
 
 C      call test_g05ddf(37.d0,7.1d0)
 C      call test_g05eyf
@@ -136,28 +136,28 @@ C
      + ERLST,RSLST,IERLST,W,LW,IW,LIW,IFAIL)
 
       WRITE(*,'(/,A)')'** D01ASF Example Program Results **'
-      WRITE(*,999)'A - lower limit of integration = ',A
+      WRITE(*,9999)'A - lower limit of integration = ',A
       WRITE(*,*)'B - upper limit of integration = infinity'
-      WRITE(*,998)'EPSABS - absolute accuracy requested = ',
+      WRITE(*,9998)'EPSABS - absolute accuracy requested = ',
      + EPSABS
       WRITE(*,*)
-      IF (IFAIL.NE.0) WRITE(*,996)'IFAIL = ', IFAIL
+      IF (IFAIL.NE.0) WRITE(*,9996)'IFAIL = ', IFAIL
       IF (IFAIL.NE.6 .AND. IFAIL.NE.10) THEN
-        WRITE(*,997)'RESULT - approximation to the integral = ',
+        WRITE(*,9997)'RESULT - approximation to the integral = ',
      + RESULT
-        WRITE(*,998)'ABSERR - estimate of the absolute error = ',
+        WRITE(*,9998)'ABSERR - estimate of the absolute error = ',
      + ABSERR
-        WRITE(*,996)'KOUNT - number of function evaluations = ',
+        WRITE(*,9996)'KOUNT - number of function evaluations = ',
      + KOUNT
-        WRITE(*,996) 'LST - number of intervals used = ',LST
-        WRITE(*,996)
+        WRITE(*,9996) 'LST - number of intervals used = ',LST
+        WRITE(*,9996)
      + 'IW(1) - max. no. of subintervals used in any one interval = ',
      + IW(1)
       END IF
- 999  FORMAT(/,1X,A,F10.4)
- 998  FORMAT(1X,A,G11.5)
- 997  FORMAT(1X,A,F11.9)
- 996  FORMAT(1X,A,I4)
+ 9999 FORMAT(/,1X,A,F10.4)
+ 9998 FORMAT(1X,A,G11.5)
+ 9997 FORMAT(1X,A,F11.9)
+ 9996 FORMAT(1X,A,I4)
       RETURN
       END
 C
@@ -233,7 +233,7 @@ C
       DATA X /7.99,8.09,8.19,8.70,9.20,10.0,12.0,15.0,20.0/
       DATA F /0.0D+0,0.27643D-4,0.43750D-1,0.16918D+0,0.46943D+0,
      + 0.94374D+0,0.99864D+0,0.99992D+0,0.99999D+0/
-      data d /0.0D+0,5.52510D-4,0.33587D+0,0.34944D+0,0.59696D+0,
+      DATA D /0.0D+0,5.52510D-4,0.33587D+0,0.34944D+0,0.59696D+0,
      + 6.03260D-2,8.98335D-4,2.93954D-5,0.0D+0/
 C     Compute M equally spaced points from X(1) to X(N).
       STEP=(X(N)-X(1))/(M-1)
@@ -251,6 +251,37 @@ C     Compute M equally spaced points from X(1) to X(N).
         WRITE(*,9999)PX(I),PF(I)
  60   CONTINUE
  9999 FORMAT(1X,F13.4,2X,F13.4)
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
+      SUBROUTINE TEST_E01BGF
+      IMPLICIT REAL*8(A-H,O-Z)
+      PARAMETER (N=9,M=11)
+      DIMENSION X(N),F(N),D(N)
+      DIMENSION PD(M),PF(M),PX(M)
+      DATA X /7.99,8.09,8.19,8.70,9.20,10.0,12.0,15.0,20.0/
+      DATA F /0.0D+0,0.27643D-4,0.43750D-1,0.16918D+0,0.46943D+0,
+     + 0.94374D+0,0.99864D+0,0.99992D+0,0.99999D+0/
+      DATA D /0.0D+0,5.52510D-4,0.33587D+0,0.34944D+0,0.59696D+0,
+     + 6.03260D-2,8.98335D-4,2.93954D-5,0.0D+0/
+C     Compute M equally spaced points from X(1) to X(N).
+      STEP=(X(N)-X(1))/(M-1)
+      DO 40 I=1,M
+        PX(I)=DMIN1(X(1)+(I-1)*STEP,X(N))
+ 40   CONTINUE
+      IFAIL=0
+
+      CALL E01BGF(N,X,F,D,M,PX,PF,PD,IFAIL)
+
+      WRITE(*,'(/A)')'** E01BGF Example Program Results **'
+      WRITE(*,'(/,17X,A,A)')'Interpolated','   Interpolated'
+      WRITE(*,'(6X,A,10X,A,5X,A)')'Abscissa','Value','Derivative'
+      DO 60 I=1,M
+        WRITE(*,9999)PX(I),PF(I),PD(I)
+ 60   CONTINUE
+ 9999 FORMAT(1X,F13.4,2X,F13.4,1P,E15.3)
       RETURN
       END
 C
