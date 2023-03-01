@@ -128,6 +128,8 @@ Solves an initial value problem for a first-order system of ordinary differentia
 
 ```Fortran
 CALL D02BAF(X,XEND,N,Y,TOL,FCN,W,IFAIL)
+INTEGER N,IFAIL
+REAL Y(N)
 ```
 
 The **D02BAF** routine is replaced by [RKSUITE](#rksuite---a-suite-of-runde-kutta-codes).
@@ -138,6 +140,8 @@ Solves an initial value problem for a first-order system of ordinary differentia
 
 ```Fortran
 CALL D02BBF(X,XEND,N,Y,TOL,IRELAB,FCN,OUTPUT,W,IFAIL)
+INTEGER N,IFAIL
+REAL Y(N)
 ```
 
 The **D02BBF** routine is replaced by [RKSUITE](#rksuite---a-suite-of-runde-kutta-codes).
