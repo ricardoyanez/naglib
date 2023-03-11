@@ -11,7 +11,7 @@ OBJ=$(SRC:%.f=%.o)
 
 rksuite:
 ifeq (,$(wildcard rksuite.f))
-	wget https://netlib.sandia.gov/ode/rksuite/rksuite.f
+	wget --no-check-certificate https://netlib.sandia.gov/ode/rksuite/rksuite.f
 endif
 	cp -af rksuite.f rksuite.f.orig
 	patch -Nur /dev/null rksuite.f rksuite.f.patch || true

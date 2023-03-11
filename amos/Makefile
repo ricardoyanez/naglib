@@ -8,11 +8,11 @@ OBJ=$(SRC:%.f=%.o)
 
 quadpack:
 ifeq (,$(wildcard zbesi.f))
-	wget https://netlib.org/amos/zbesi.f
+	wget --no-check-certificate https://netlib.org/amos/zbesi.f
 	cp -af zbesi.f zbesi.f.orig
 endif
 ifeq (,$(wildcard dgamln.f))
-	wget https://netlib.org/amos/dgamln.f
+	wget --no-check-certificate https://netlib.org/amos/dgamln.f
 endif
 	cp -af zbesi.f zbesi.f.orig
 	patch -Nur /dev/null zbesi.f zbesi.f.patch || true
