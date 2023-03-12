@@ -18,7 +18,7 @@ OBJ=dpchim.o zasyi.o zlog.o zunhj.o \
     xgetua.o j4save.o fdump.o i1mach.o \
     c_c05adf.o c_d01amf.o c_d01asf.o c_g05ddf.o c_g05ecf.o c_g05eyf.o \
     c_s14aaf.o c_s14abf.o c_s15adf.o c_s18aef.o c_s18aff.o c_x01aaf.o \
-    c_x05baf.o c_d1mach.o
+    c_x05baf.o c_g05ccf.o c_d1mach.o
 
 install: libnag.so
 	install libnag.so /usr/local/lib

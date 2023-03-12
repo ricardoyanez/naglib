@@ -277,6 +277,20 @@ C
 C
 C     ------------------------------------------------------------------------
 C
+C     G05CCF sets the seed used by the basic generator in the Chapter
+C     Introduction to a non-repeatable initial value.
+C
+C     The C function c_g05ccf is used to substitute G05CCF by calling
+C     GSL functions to set up the seed for the GSL random number generator
+C
+      SUBROUTINE G05CCF
+      IMPLICIT REAL*8(A-G,O-Z)
+      CALL c_g05ccf
+      RETURN
+      END
+C
+C     ------------------------------------------------------------------------
+C
 C     G05DDF returns a pseudo-random real number taken from a Normal
 C     (Gaussian) distribution with mean a and standard deviation b.
 C
